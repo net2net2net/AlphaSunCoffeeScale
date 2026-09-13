@@ -13,6 +13,33 @@
 
 ---
 
+## ⬇️ 下载安装（当前版本 v1.3）
+
+### 直接下载（推荐走 Release 页，本仓库 `dist/` 内亦有同名文件）
+
+| 平台 | 文件 | 大小 | GitHub 下载 | Gitee 下载 |
+|---|---|---|---|---|
+| Windows | `AlphaSunCoffeeScale-1.3.exe` | 45.3 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.exe) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.exe) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.exe) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.exe) |
+| Android | `AlphaSunCoffeeScale-1.3.apk` | 95.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.apk) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.apk) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.apk) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.apk) |
+
+> 历史版本与最新发布统一见：[GitHub Releases](https://github.com/net2net2net/AlphaSunCoffeeScale/releases) ｜ [Gitee 发行版](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases)
+
+### 安装说明
+
+- **Windows（exe）**：下载后双击运行即可——单文件自包含，**无需安装 .NET 或任何运行库**；如被 SmartScreen 拦截，点「更多信息 → 仍要运行」。配置与冲煮记录（`settings.json` / `brews.json`）生成在程序同目录。
+- **Android（apk）**：把 APK 传到手机点击安装，首次需在系统里**允许「安装未知来源应用」**；或用数据线连接后执行 `adb install -r AlphaSunCoffeeScale-1.3.apk`。已装旧版本可直接覆盖升级（数据保留）。
+
+### 完整性校验（SHA-256）
+
+```text
+eac724770316bdd96a54372ee90e7436ef909b99c325a5df64d6b7d2f98075a9  AlphaSunCoffeeScale-1.3.exe
+1ed9a4d211f4d773dd8793405a713f8388c718552aae49f4648a55ad5e11de50  AlphaSunCoffeeScale-1.3.apk
+```
+
+> Windows 下可用 PowerShell 验证：`Get-FileHash .\AlphaSunCoffeeScale-1.3.exe -Algorithm SHA256`
+
+---
+
 ## 1. 软件简介
 
 打开软件即进入**四模块工作台**：
