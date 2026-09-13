@@ -55,28 +55,7 @@ eac724770316bdd96a54372ee90e7436ef909b99c325a5df64d6b7d2f98075a9  AlphaSunCoffee
 
 ## 2. 架构与逻辑关系
 
-### 2.1 四层解耦（自下而上）
-
-```text
-┌──────────────────────────────────────────────────────────────────┐
-│ 平台 head：CoffeeScale.Avalonia(桌面 Win32) / .Android / .iOS / .MacCatalyst │
-│   只做"启动壳"：注册平台生命周期 + 字体回退（FontConfig），无业务逻辑           │
-├──────────────────────────────────────────────────────────────────┤
-│ CoffeeScale.UI（共享控件库，四端复用）                                      │
-│   MainWindow(纯 C# 界面，无 XAML) / App / FontConfig / Converters           │
-├──────────────────────────────────────────────────────────────────┤
-│ CoffeeScale.ViewModels（UI 无关状态机）                                    │
-│   BrewViewModel：绑定 Core、驱动模拟注水与实时快照、记录持久化               │
-│   通过注入 Marshal 委托把属性回写 UI 线程 → 可被 Avalonia/MAUI/WPF 复用      │
-├──────────────────────────────────────────────────────────────────┤
-│ CoffeeScale.Core（纯逻辑引擎，零 UI 依赖）                                 │
-│   BrewEngine（配方生成）/ I18n（双语资源表）/ 记录模型                       │
-└──────────────────────────────────────────────────────────────────┘
-```
-
-> 依赖方向严格单向：head → UI → ViewModels → Core。Core 不知道 UI 存在，因此冲煮计算可以被 162 项单测完整覆盖。
-
-### 2.2 冲煮计算的主干流程
+### 冲煮计算的主干流程
 
 ```text
 用户参数(粉量档/烘焙度/处理方式/滤杯/滤纸/冲煮法)
@@ -95,29 +74,9 @@ BrewViewModel：驱动"模拟注水" → 每帧快照(重量/计时/流速/实�
 保存记录 brews.json（配方 + 实测末重 + 实际粉水比 + 产地/豆种/Ag 等全字段）
 ```
 
-界面图标全部使用 emoji，由内嵌字体（Noto Emoji / Noto Sans Symbols 2）+ 全局字体回退保证**四端一致渲染**（见 `FontConfig.cs`）。
-
 ---
 
-## 3. 如何构建（Build）
-
-### 3.1 环境要求
-
-- .NET SDK **9.0** + Android workload（`dotnet workload install android`）
-- Android：JDK 17 + Android SDK build-tools **35.0.0**（APK 签名校验用）
-- 打包 Android 时脚本会先把仓库复制到纯英文路径 `C:\dev\cs-build` 再构建（规避 aapt2 在非 ASCII 路径下的损坏问题）
-
-> ⚠️ 本仓库在部分受限 shell 里缺 `SystemRoot` 等环境变量，**所有 dotnet 命令须经 `dotnet-env.sh` 包装**。
-
-### 3.2 一键发布（推荐）
-
-```bash
-powershell ./release.ps1 -Version 1.3
-```
-
-自动完成：EXE 单文件发布 → APK 构建+签名 → 按 **`AlphaSunCoffeeScale-<版本>`** 规范命名拷贝到 `dist/` → 校验签名与产物。
-
-### 3.3 分步构建
+## 
 
 ```bash
 # ① Windows 桌面单文件（无依赖，双击即运行）
@@ -127,19 +86,6 @@ bash dotnet-env.sh publish src/CoffeeScale.Avalonia/CoffeeScale.Avalonia.csproj 
 # ② Android 单文件 APK（英文路径构建 + 签名 + 拷回）
 powershell ./publish-android.ps1
 
-# ③ 全量测试（162 项）
-bash dotnet-env.sh test tests/CoffeeScale.Core.Tests/CoffeeScale.Core.Tests.csproj -c Release
-bash dotnet-env.sh test tests/CoffeeScale.ViewModels.Tests/CoffeeScale.ViewModels.Tests.csproj -c Release
-bash dotnet-env.sh test tests/CoffeeScale.UI.Tests/CoffeeScale.UI.Tests.csproj -c Release
-```
-
-### 3.4 产物与命名规范
-
-| 产物 | 命名 | 说明 |
-|------|------|------|
-| Windows 桌面 | `dist/AlphaSunCoffeeScale-<版本>.exe` | 单文件自包含（PublishSingleFile + SelfContained），无 .NET 依赖 |
-| 安卓安装包 | `dist/AlphaSunCoffeeScale-<版本>.apk` | 单文件签名 APK（debug 密钥），`adb install -r` 或手机直接安装 |
-| 运行时配置 | `settings.json` / `brews.json` | 程序首次运行生成的**用户数据**，非分发依赖 |
 
 > 版本号必须三处对齐：`MainWindow.AppVer` ↔ Android `ApplicationDisplayVersion`（整数 `ApplicationVersion` 递增）↔ `CHANGELOG.md` 条目。
 
