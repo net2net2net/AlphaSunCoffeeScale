@@ -1,0 +1,4 @@
+# 构建中间产物不入库（发布走 release.ps1）
+bin/
+obj/
+*.user
