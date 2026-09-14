@@ -1,4 +1,4 @@
-# AlphaSunCoffeeScale · 手冲咖啡智能冲煮称
+# AlphaSunCoffeeScale · 没有感情的手冲咖啡智能计算器
 
 > **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，从豆子烘焙度（烘焙值 Ag）、处理方式、豆钟、产地、密度、生长海拔、 生豆烘焙日期、养豆期，到手冲咖啡的冲煮方式 （冲煮手法）、粉量、粉水比、滤杯、滤纸、风味目标 等等维度构建手冲咖啡的建模和逻辑关系。目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡。 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / 安卓 **。：
 >
@@ -9,7 +9,9 @@
 > | **作者** | 阳光 net2net2net（Vx: net2net） |
 > | **许可证** | 未另行声明（个人项目） |
 
----
+<img width="1442" height="1384" alt="main" src="https://github.com/user-attachments/assets/ad6de297-dbd5-4019-bb1f-81a2b3ae72b6" />
+
+<img width="2560" height="1504" alt="Pro-user1" src="https://github.com/user-attachments/assets/86e4aa38-3a63-47fd-baf5-ead43dcd524e" />
 
 ## ⬇️ 下载安装（当前版本 v1.5）
 
@@ -51,7 +53,19 @@ ee77f3caee1f604aa050e4669487ff526d62d14bc098340a216762167612e8ec  AlphaSunCoffee
 
 冲煮引擎核心能力：**三维闷蒸**（烘焙度 × 风味走向 × 养豆期排气系数）、**8 级烘焙度**（Agtron 粉样标尺）、**8 种处理法**、滤杯/滤纸/研磨多维关联修正、**聪明杯浸泡式分支**、**水质推荐**（TDS/GH/KH）、**养豆期推荐与满日期推算**、18 大产地 + 14 种豆种风味元数据、中英双语即时切换。
 
----
+新手模式
+<img width="1278" height="1504" alt="Basic-user1" src="https://github.com/user-attachments/assets/266445f4-2516-433a-a220-094d2dc9de59" />
+<img width="1230" height="1504" alt="Basic-user2" src="https://github.com/user-attachments/assets/47b04349-7e76-418f-80ea-7377b43f77e9" />
+
+专业模式
+<img width="2560" height="1504" alt="Pro-user2" src="https://github.com/user-attachments/assets/df520ee5-a1dd-49f4-a04e-346759e80363" />
+
+简易咖啡计算器
+<img width="1706" height="1444" alt="jsq" src="https://github.com/user-attachments/assets/e306cd3e-3d94-44b2-8488-08e5b91426da" />
+
+手冲大师方案
+<img width="1292" height="1444" alt="master" src="https://github.com/user-attachments/assets/f5ce1d52-383c-4498-b4fe-faa849569efb" />
+
 
 ## 2. 架构与逻辑关系
 
