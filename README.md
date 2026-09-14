@@ -1,6 +1,6 @@
 # AlphaSunCoffeeScale · 手冲咖啡智能冲煮称
 
-> **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡： 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / 安卓 **。：
+> **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，从豆子烘焙度（烘焙值 Ag）、处理方式、豆钟、产地、密度、生长海拔、 生豆烘焙日期、养豆期，到手冲咖啡的冲煮方式 （冲煮手法）、粉量、粉水比、滤杯、滤纸、风味目标 等等维度构建手冲咖啡的建模和逻辑关系。目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡。 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / 安卓 **。：
 >
 > | | |
 > |---|---|
@@ -76,43 +76,8 @@ BrewViewModel：驱动"模拟注水" → 每帧快照(重量/计时/流速/实�
 
 ---
 
----
 
-## 3. 如何构建（Build）
-
-### 3.1 环境要求
-
-- .NET SDK **9.0** + Android workload（`dotnet workload install android`）
-- Android：JDK 17 + Android SDK build-tools **35.0.0**（APK 签名校验用）
-- 打包 Android 时脚本会先把仓库复制到纯英文路径 `C:\dev\cs-build` 再构建（规避 aapt2 在非 ASCII 路径下的损坏问题）
-
-> ⚠️ 本仓库在部分受限 shell 里缺 `SystemRoot` 等环境变量，**所有 dotnet 命令须经 `dotnet-env.sh` 包装**。
-
-### 3.2 一键发布（推荐）
-
-```bash
-powershell ./release.ps1 -Version 1.5
-```
-
-自动完成：EXE 单文件发布 → APK 构建+签名 → 按 **`AlphaSunCoffeeScale-<版本>`** 规范命名拷贝到 `dist/` → 校验签名与产物。
-
-### 3.3 分步构建
-
-```bash
-# ① Windows 桌面单文件（无依赖，双击即运行）
-bash dotnet-env.sh publish src/CoffeeScale.Avalonia/CoffeeScale.Avalonia.csproj \
-     -c Release -r win-x64 -o dist/win-x64
-
-# ② Android 单文件 APK（英文路径构建 + 签名 + 拷回）
-powershell ./publish-android.ps1
-
-# ③ 全量测试（163 项）
-bash dotnet-env.sh test tests/CoffeeScale.Core.Tests/CoffeeScale.Core.Tests.csproj -c Release
-bash dotnet-env.sh test tests/CoffeeScale.ViewModels.Tests/CoffeeScale.ViewModels.Tests.csproj -c Release
-bash dotnet-env.sh test tests/CoffeeScale.UI.Tests/CoffeeScale.UI.Tests.csproj -c Release
-```
-
-### 3.4 产物与命名规范
+### 产物与命名规范
 
 | 产物 | 命名 | 说明 |
 |------|------|------|
@@ -124,7 +89,7 @@ bash dotnet-env.sh test tests/CoffeeScale.UI.Tests/CoffeeScale.UI.Tests.csproj -
 
 ---
 
-## 4. 版本变化记录（摘要）
+##  版本变化记录（摘要）
 
 | 版本 | 日期 | 要点 |
 |------|------|------|
@@ -143,9 +108,6 @@ bash dotnet-env.sh test tests/CoffeeScale.UI.Tests/CoffeeScale.UI.Tests.csproj -
 
 - [CHANGELOG.md](CHANGELOG.md) — 版本变化记录与发布清单
 - [DESIGN.md](DESIGN.md) — 设计系统「暖仪式 Warm Ritual」单一事实来源（色板/字阶/组件语言）
-- [docs/01-项目建设材料总览.md](docs/01-项目建设材料总览.md)
-- [docs/02-咖啡计算逻辑说明.md](docs/02-咖啡计算逻辑说明.md) — 冲煮计算逻辑详解
-- [docs/03-产品结构规划-四模块模式.md](docs/03-产品结构规划-四模块模式.md)
 
 ---
 
