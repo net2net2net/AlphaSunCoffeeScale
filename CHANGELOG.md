@@ -8,6 +8,34 @@
 
 - 计划中：iOS / MacCatalyst 头工程接入 `UseIconFontFallbacks()`（本机无法构建，代码已预留同一行调用）。
 
+## [1.5] — 2026-09-14
+
+### Changed（调整）
+- **专业模式「咖啡豆密度」交互精简（去掉自动推导开关）**：
+  - 移除「自动（由海拔推导）」勾选框，界面只剩 **咖啡豆海拔输入框 + 密度下拉框** 并排一行，更简洁。
+  - **海拔改为密度的「便捷预填」**：未手选密度时，改海拔即自动刷新密度档（≥1700 致密 / 1200–1699 中等 / <1200 疏松）；在下拉框手选一次后，海拔不再覆盖手选值（应对低海拔异常硬豆等特例）。
+  - 两个控件始终可用、无禁用态；视觉升级为 12px 圆角 + 暖深底 + 细描边 + 44pt 最小高度，与全应用输入控件风格统一（INS × Apple）。
+
+### Changed（代码优化）
+- `BrewViewModel`：删除 `DensityAuto` 公开属性与 `SyncDensityFromAltitude()`，改以内部标记 `_densityUserSet` 区分「手选」与「预填」，新增 `ApplyDensityFromAltitude(altitudeDriven)`；`Reset`/`LoadSettings`/`CaptureSettings` 同步改写。
+- `BrewSettings.DensityAuto` 降级为**兼容字段**（保留旧配置互读），写盘语义为 `DensityAuto = !_densityUserSet`；读取时旧版 `false`→恢复手选密度、`true`→由海拔重推。
+- `I18n`：删除已不再使用的 `DensityAuto` / `DensityManual` 词条；`BeanAltitudeHint` 改写为「预填 + 可手选覆盖」表述。
+- `ParamInfo`：`beanAltitudeM` 条目改写为预填语义，并清除其中早已过时的「海拔 → 水温 +1℃」描述（水温补偿已于 2026-09-08 移除）。
+
+### Tests
+- `CoffeeScale.Core.Tests` 72/72、`CoffeeScale.ViewModels.Tests` 52/52（新增密度「预填 / 手选覆盖 / 重载重推」用例）、`CoffeeScale.UI.Tests` 39/39，共 **163 项全绿**。
+
+## [1.4] — 2026-09-14
+
+### Added（新增）
+- **杯测法统一基准与豆密度海拔推导正式打包发布**（规格于 [1.3] 续录确定，本版本首次出包）：
+  - **杯测法（cupping）**：11g 咖啡粉 + 200g 94℃ 热水（≈1:18.18，`CuppingRatio=18.18`），全程静态计时（`IsCupping=true`）、不依赖注水模拟；阶段序列 **注水浸润 PourIn(30s) → 静置浸泡 Soak(240s)**，无闷蒸/破壳/不过滤；滤杯/滤纸取空。VM 选杯测且粉量/粉水比仍为默认时自动置 `Dose=11 / Ratio=18.18`（用户可微调）。
+  - **豆密度海拔自动推导**：新增 `BeanAltitudeM`（默认 1500m）与 `DensityAuto`（默认 true）。`DensityAuto=true` 时密度由 `DensityFromAltitude(alt)` 实时推导（≥1700m→dense / 1200–1699m→medium / <1200m→light），改海拔即 `SyncDensityFromAltitude()` 重算；`false` 时由用户手选密度、海拔仅作参考。海拔不再参与水温（沸点封顶已于 2026-09-08 移除）。
+- **源注释与网页同步**：`ParamInfo.cs` 与网页 `pour-over-lab.html` KPI 的 SCA 基准标注由 `1:18.2` 统一修订为 `1:18.18`（统一基准 11g 粉 / 200g 94℃ 热水）。
+
+### Tests
+- UI headless 39/39、ViewModel 51/51、Core 72/72，共 **162 项全绿**（含 ParamInfo 文案变更回归）。
+
 ## [1.3] — 2026-09-13
 
 ### Added（新增）
@@ -30,6 +58,12 @@
 
 ### Tests
 - UI headless 测试 39/39、ViewModel 51/51、Core 72/72，共 **162 项全绿**。
+
+### Added（新增 · 2026-09-13 续）
+- **杯测法（cupping）统一基准重订**：11g 咖啡粉 + 200g 94℃ 热水（≈1:18.18，`CuppingRatio=18.18`），全程静态计时（`IsCupping=true`）、不依赖注水模拟；阶段序列由旧「闷蒸固定 240s」修订为 **注水浸润 PourIn(30s) → 静置浸泡 Soak(240s)**，无闷蒸/破壳/不过滤；滤杯/滤纸取空（建议器具：杯测碗、杯测勺、电子秤、计时器、研磨机、热水壶、温度计）。VM 选杯测且粉量/粉水比仍为默认时自动置 `Dose=11 / Ratio=18.18`（用户可微调）。
+- **豆密度海拔自动推导**：新增 `BeanAltitudeM`（默认 1500m）与 `DensityAuto`（默认 true）。`DensityAuto=true` 时密度由 `DensityFromAltitude(alt)` 实时推导（≥1700m→dense / 1200–1699m→medium / <1200m→light），改海拔即 `SyncDensityFromAltitude()` 重算；`false` 时由用户手选密度、海拔仅作参考。海拔不再参与水温（2026-09-08 已移除沸点封顶）。
+
+> 注：上述杯测法修订**取代** `[1.1]` 中「闷蒸固定 240s / 注水双重计时」的描述——杯测法现已无闷蒸段。
 
 ## [1.2] — 2026-09-13
 

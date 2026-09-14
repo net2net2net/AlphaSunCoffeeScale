@@ -5,36 +5,36 @@
 > | | |
 > |---|---|
 > | **软件名** | AlphaSunCoffeeScale（界面显示名：AlphaSun 手冲咖啡计算器） |
-> | **当前版本** | v1.3（版本变化记录见 [CHANGELOG.md](CHANGELOG.md)） |
+> | **当前版本** | v1.5（版本变化记录见 [CHANGELOG.md](CHANGELOG.md)） |
 > | **作者** | 阳光 net2net2net（Vx: net2net） |
 > | **许可证** | 未另行声明（个人项目） |
 
 ---
 
-## ⬇️ 下载安装（当前版本 v1.3）
+## ⬇️ 下载安装（当前版本 v1.5）
 
 ### 直接下载（推荐走 Release 页，本仓库 `dist/` 内亦有同名文件）
 
 | 平台 | 文件 | 大小 | GitHub 下载 | Gitee 下载 |
 |---|---|---|---|---|
-| Windows | `AlphaSunCoffeeScale-1.3.exe` | 45.3 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.exe) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.exe) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.exe) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.exe) |
-| Android | `AlphaSunCoffeeScale-1.3.apk` | 95.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.apk) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.apk) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.3.apk) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.3/AlphaSunCoffeeScale-1.3.apk) |
+| Windows | `AlphaSunCoffeeScale-1.5.exe` | 45.3 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.exe) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.exe) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.exe) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.exe) |
+| Android | `AlphaSunCoffeeScale-1.5.apk` | 95.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) |
 
 > 历史版本与最新发布统一见：[GitHub Releases](https://github.com/net2net2net/AlphaSunCoffeeScale/releases) ｜ [Gitee 发行版](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases)
 
 ### 安装说明
 
 - **Windows（exe）**：下载后双击运行即可——单文件自包含，**无需安装 .NET 或任何运行库**；如被 SmartScreen 拦截，点「更多信息 → 仍要运行」。配置与冲煮记录（`settings.json` / `brews.json`）生成在程序同目录。
-- **Android（apk）**：把 APK 传到手机点击安装，首次需在系统里**允许「安装未知来源应用」**；或用数据线连接后执行 `adb install -r AlphaSunCoffeeScale-1.3.apk`。已装旧版本可直接覆盖升级（数据保留）。
+- **Android（apk）**：把 APK 传到手机点击安装，首次需在系统里**允许「安装未知来源应用」**；或用数据线连接后执行 `adb install -r AlphaSunCoffeeScale-1.5.apk`。已装旧版本可直接覆盖升级（数据保留）。
 
 ### 完整性校验（SHA-256）
 
 ```text
-eac724770316bdd96a54372ee90e7436ef909b99c325a5df64d6b7d2f98075a9  AlphaSunCoffeeScale-1.3.exe
-1ed9a4d211f4d773dd8793405a713f8388c718552aae49f4648a55ad5e11de50  AlphaSunCoffeeScale-1.3.apk
+ee77f3caee1f604aa050e4669487ff526d62d14bc098340a216762167612e8ec  AlphaSunCoffeeScale-1.5.exe
+88be78e86cb2bc2a78d3da5f261f6f3883c8fa0c137614ec244db218acef50f4  AlphaSunCoffeeScale-1.5.apk
 ```
 
-> Windows 下可用 PowerShell 验证：`Get-FileHash .\AlphaSunCoffeeScale-1.3.exe -Algorithm SHA256`
+> Windows 下可用 PowerShell 验证：`Get-FileHash .\AlphaSunCoffeeScale-1.5.exe -Algorithm SHA256`
 
 ---
 
@@ -63,10 +63,10 @@ eac724770316bdd96a54372ee90e7436ef909b99c325a5df64d6b7d2f98075a9  AlphaSunCoffee
         ▼
 BrewEngine.GenerateRecipe ──► 水温 = 基准(烘焙度) + 处理法微调 + 研磨显式覆盖微调
         │                      闷蒸 = f(烘焙度, 风味走向, 养豆期排气系数)
-        │                      粉水比 = 基准(烘焙度) + 处理法微调（新手模式杯测固定 18.2 兜底）
+        │                      粉水比 = 基准(烘焙度) + 处理法微调（新手模式杯测固定 18.18 兜底，统一基准 11g 粉 / 200g 94℃ 热水）
         │                      研磨 = 滤杯基准 + 烘焙度修正（浅烘+1 细 / 深烘-1 粗）
         │                      流速 = 滤杯 FlowBase + 研磨 FlowAdj + 滤纸 FlowAdj (clamp 3–14 g/s)
-        │                      阶段序列 = 冲煮法模板（杯测法走浸泡分支，闷蒸固定 4:00）
+        │                      阶段序列 = 冲煮法模板（杯测法：注水浸润 30s → 静置浸泡 240s，无闷蒸/破壳/不过滤，静态计时）
         ▼
 BrewViewModel：驱动"模拟注水" → 每帧快照(重量/计时/流速/实际粉水比/阶段进度)
         │                      流量偏快阈值 = 推荐流速 × 1.7；停滞检测
@@ -76,7 +76,27 @@ BrewViewModel：驱动"模拟注水" → 每帧快照(重量/计时/流速/实�
 
 ---
 
-## 
+---
+
+## 3. 如何构建（Build）
+
+### 3.1 环境要求
+
+- .NET SDK **9.0** + Android workload（`dotnet workload install android`）
+- Android：JDK 17 + Android SDK build-tools **35.0.0**（APK 签名校验用）
+- 打包 Android 时脚本会先把仓库复制到纯英文路径 `C:\dev\cs-build` 再构建（规避 aapt2 在非 ASCII 路径下的损坏问题）
+
+> ⚠️ 本仓库在部分受限 shell 里缺 `SystemRoot` 等环境变量，**所有 dotnet 命令须经 `dotnet-env.sh` 包装**。
+
+### 3.2 一键发布（推荐）
+
+```bash
+powershell ./release.ps1 -Version 1.5
+```
+
+自动完成：EXE 单文件发布 → APK 构建+签名 → 按 **`AlphaSunCoffeeScale-<版本>`** 规范命名拷贝到 `dist/` → 校验签名与产物。
+
+### 3.3 分步构建
 
 ```bash
 # ① Windows 桌面单文件（无依赖，双击即运行）
@@ -86,6 +106,19 @@ bash dotnet-env.sh publish src/CoffeeScale.Avalonia/CoffeeScale.Avalonia.csproj 
 # ② Android 单文件 APK（英文路径构建 + 签名 + 拷回）
 powershell ./publish-android.ps1
 
+# ③ 全量测试（163 项）
+bash dotnet-env.sh test tests/CoffeeScale.Core.Tests/CoffeeScale.Core.Tests.csproj -c Release
+bash dotnet-env.sh test tests/CoffeeScale.ViewModels.Tests/CoffeeScale.ViewModels.Tests.csproj -c Release
+bash dotnet-env.sh test tests/CoffeeScale.UI.Tests/CoffeeScale.UI.Tests.csproj -c Release
+```
+
+### 3.4 产物与命名规范
+
+| 产物 | 命名 | 说明 |
+|------|------|------|
+| Windows 桌面 | `dist/AlphaSunCoffeeScale-<版本>.exe` | 单文件自包含（PublishSingleFile + SelfContained），无 .NET 依赖 |
+| 安卓安装包 | `dist/AlphaSunCoffeeScale-<版本>.apk` | 单文件签名 APK（debug 密钥），`adb install -r` 或手机直接安装 |
+| 运行时配置 | `settings.json` / `brews.json` | 程序首次运行生成的**用户数据**，非分发依赖 |
 
 > 版本号必须三处对齐：`MainWindow.AppVer` ↔ Android `ApplicationDisplayVersion`（整数 `ApplicationVersion` 递增）↔ `CHANGELOG.md` 条目。
 
@@ -95,7 +128,9 @@ powershell ./publish-android.ps1
 
 | 版本 | 日期 | 要点 |
 |------|------|------|
-| **1.3** | 2026-09-13 | **INS × Apple 界面全面升级**（投影/圆角/胶囊徽章/渐隐细线/图标瓷砖暖白字形）、深色主题变体、修复图标对比度与英文界面残留中文、禁用按钮可辨性、测试 162 项全绿 |
+| **1.5** | 2026-09-14 | **专业模式「咖啡豆密度」交互精简**：去掉「自动（由海拔推导）」开关，海拔输入框与密度下拉框并排一行；海拔改为密度的便捷预填、下拉可手选覆盖；输入控件视觉升级（12 圆角/细描边）；代码清理与文档同步，测试 163 项全绿 |
+| **1.4** | 2026-09-14 | **杯测法统一基准 + 豆密度海拔预填正式出包**：杯测 11g 粉 + 200g 94℃ 热水（≈1:18.18）、注水浸润 30s → 静置浸泡 240s；豆密度由海拔预填/可手选；修复 Android target `CheckBox` 二义性编译错误 |
+| **1.3** | 2026-09-13 | **INS × Apple 界面全面升级**（投影/圆角/胶囊徽章/渐隐细线/图标瓷砖暖白字形）、深色主题变体、修复图标对比度与英文界面残留中文、禁用按钮可辨性 |
 | **1.2** | 2026-09-13 | **修复 Android 图标整片缺失**（内嵌 Noto Emoji + Noto Sans Symbols 2 字体回退） |
 | **1.1** | 2026-09-11 | 统一「Origami折纸滤杯」命名、修复杯测法闷蒸 4:00 与注水双重计时、新手模式底部署名与视觉增强 |
 | **1.0** | 2026-09-03 | 首个 .NET 原生跨端版本：四层架构、冲煮引擎、模拟称、四模块工作台、双语 |
