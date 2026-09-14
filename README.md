@@ -9,10 +9,6 @@
 > | **作者** | 阳光 net2net2net（Vx: net2net） |
 > | **许可证** | 未另行声明（个人项目） |
 
-<img width="1442" height="1384" alt="main" src="https://github.com/user-attachments/assets/ad6de297-dbd5-4019-bb1f-81a2b3ae72b6" />
-
-<img width="2560" height="1504" alt="Pro-user1" src="https://github.com/user-attachments/assets/86e4aa38-3a63-47fd-baf5-ead43dcd524e" />
-
 ## ⬇️ 下载安装（当前版本 v1.5）
 
 ### 直接下载（推荐走 Release 页，本仓库 `dist/` 内亦有同名文件）
@@ -23,6 +19,11 @@
 | Android | `AlphaSunCoffeeScale-1.5.apk` | 95.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) |
 
 > 历史版本与最新发布统一见：[GitHub Releases](https://github.com/net2net2net/AlphaSunCoffeeScale/releases) ｜ [Gitee 发行版](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases)
+
+
+<img width="1442" height="1384" alt="main" src="https://github.com/user-attachments/assets/ad6de297-dbd5-4019-bb1f-81a2b3ae72b6" />
+
+<img width="2560" height="1504" alt="Pro-user1" src="https://github.com/user-attachments/assets/86e4aa38-3a63-47fd-baf5-ead43dcd524e" />
 
 ### 安装说明
 
