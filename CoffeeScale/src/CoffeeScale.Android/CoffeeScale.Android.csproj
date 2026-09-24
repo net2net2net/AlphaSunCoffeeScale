@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Android 头工程：复用共享 UI 库 CoffeeScale.UI（MainWindow/App/转换器）与逻辑层。
+         构建需 `dotnet workload install android` + Android SDK（cmdline-tools/platforms;android-35/build-tools;35）+ JDK17。
+         构建命令（示例）：
+         dotnet build src/CoffeeScale.Android -c Debug -t:SignAndroidPackage \
+           -p:JavaSdkDirectory=<JDK17> -p:AndroidSdkDirectory=<SDK>
+         注意：工程路径含非 ASCII 字符时 aapt2 中间 APK 会损坏（XABLD7024），须在纯英文路径下构建。 -->
+    <TargetFramework>net9.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType> <!-- 必须为 Exe：否则工程被当 Android 库（产 aar），不产 APK 且不处理应用资源 -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationId>com.coffeescale.app</ApplicationId>
+    <ApplicationVersion>6</ApplicationVersion>
+    <ApplicationDisplayVersion>1.5</ApplicationDisplayVersion>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidManifest>AndroidManifest.xml</AndroidManifest>
+  </PropertyGroup>
+
+  <!-- Debug 关闭 Fast Deployment：让程序集打包进 APK，避免 adb install 后
+       因 files/.__override__/ 缺失程序集而崩溃（Fatal: No assemblies found）。
+       EmbedAssembliesIntoApk=true 强制程序集嵌入 APK（关闭 Fast Deployment）；
+       AndroidUseAssemblyStore=false 禁用 AssemblyStore blob，防止 libxamarin-app.so
+       被 Gradle 压缩导致 Mono 运行时无法读取（lib/x86_64/ MUST be STORED）。 -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidUseAssemblyStore>false</AndroidUseAssemblyStore>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Android" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoffeeScale.UI\CoffeeScale.UI.csproj" />
+    <ProjectReference Include="..\CoffeeScale.ViewModels\CoffeeScale.ViewModels.csproj" />
+    <ProjectReference Include="..\CoffeeScale.Core\CoffeeScale.Core.csproj" />
+  </ItemGroup>
+
+</Project>

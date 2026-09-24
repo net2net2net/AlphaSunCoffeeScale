@@ -1,0 +1,8 @@
+<Project>
+  <!-- Release 发布：所有源项目均不生成 pdb（单文件发布时产物只剩 CoffeeScale.exe 一个文件）。
+       Debug 构建不受影响，保留调试符号。 -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+</Project>

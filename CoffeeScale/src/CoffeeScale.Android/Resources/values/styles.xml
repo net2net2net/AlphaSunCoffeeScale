@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- 无操作栏主题；AppCompat 相关包由 Avalonia.Android 依赖引入。 -->
+  <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+  <style name="MyTheme.NoActionBar" parent="MyTheme" />
+</resources>

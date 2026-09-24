@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 咖啡杯启动图标（矢量，全 API 兼容）：深棕圆角底 + 陶瓷杯身 + 咖啡液面 + 杯柄 + 蒸汽 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+  <!-- 背景圆 -->
+  <path android:fillColor="#2B1B10" android:pathData="M54,54 m-50,0 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0 Z"/>
+  <!-- 杯碟 -->
+  <path android:fillColor="#D2C4B2"
+      android:pathData="M27,69 h54 a4,4 0 0 1 0,8 h-54 a4,4 0 0 1 0,-8 Z"/>
+  <!-- 杯身（梯形杯） -->
+  <path android:fillColor="#ECE2D2"
+      android:pathData="M33,38 L75,38 L71,70 Q70,73 67,73 L41,73 Q38,73 37,70 Z"/>
+  <!-- 杯口椭圆（咖啡液面） -->
+  <path android:fillColor="#3E2616"
+      android:pathData="M54,38 m-22,0 a22,5 0 1,0 44,0 a22,5 0 1,0 -44,0 Z"/>
+  <!-- 液面 crema 高光 -->
+  <path android:fillColor="#825C3C"
+      android:pathData="M50,37.5 m-15,0 a15,3.2 0 1,0 30,0 a15,3.2 0 1,0 -30,0 Z"/>
+  <!-- 杯柄（C 形环） -->
+  <path android:strokeColor="#ECE2D2" android:strokeWidth="6" android:fillColor="#00000000"
+      android:strokeLineCap="round"
+      android:pathData="M74,46 q13,2 11,13 q-1,9 -12,8"/>
+  <!-- 蒸汽三缕 -->
+  <path android:strokeColor="#B4AAA0" android:strokeWidth="3" android:fillColor="#00000000"
+      android:strokeLineCap="round" android:pathData="M42,32 q-3,-5 1,-8 q3,-3 -1,-7"/>
+  <path android:strokeColor="#B4AAA0" android:strokeWidth="3" android:fillColor="#00000000"
+      android:strokeLineCap="round" android:pathData="M54,30 q-3,-5 1,-8 q3,-3 -1,-7"/>
+  <path android:strokeColor="#B4AAA0" android:strokeWidth="3" android:fillColor="#00000000"
+      android:strokeLineCap="round" android:pathData="M66,32 q-3,-5 1,-8 q3,-3 -1,-7"/>
+</vector>

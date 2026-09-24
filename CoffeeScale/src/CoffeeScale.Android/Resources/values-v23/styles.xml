@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- API 23+：应用为深咖啡色背景且 edge-to-edge 绘制到状态栏之下，
+       强制状态栏用浅色图标/文字（时间/电量），否则 Light 主题的深色图标在深色背景上不可见。
+       （API 21–22 无法控制图标颜色，系统默认浅色，天然可读。） -->
+  <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowLightStatusBar">false</item>
+  </style>
+  <style name="MyTheme.NoActionBar" parent="MyTheme" />
+</resources>

@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- MacCatalyst 头工程：复用共享 UI 库 CoffeeScale.UI 与逻辑层。
+         本环境无法安装 maccatalyst workload（证书/MSI 信任问题），此工程需在 macOS 上已装
+         `dotnet workload install maccatalyst` + Xcode 的机器构建；此处为完整脚手架。
+         构建：dotnet build -c Release -r maccatalyst-arm64 （Intel Mac 用 -r maccatalyst-x64）
+         RuntimeIdentifier 不写死，默认 arm64，可经 -r 覆盖。 -->
+    <TargetFramework>net9.0-maccatalyst</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- 与 Info.plist LSMinimumSystemVersion 对齐（Mac Catalyst 15.0 ≙ macOS 12 Monterey） -->
+    <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">maccatalyst-arm64</RuntimeIdentifier>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.MacCatalyst" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoffeeScale.UI\CoffeeScale.UI.csproj" />
+    <ProjectReference Include="..\CoffeeScale.ViewModels\CoffeeScale.ViewModels.csproj" />
+    <ProjectReference Include="..\CoffeeScale.Core\CoffeeScale.Core.csproj" />
+  </ItemGroup>
+
+  <!-- App 图标资源目录（Assets.xcassets/AppIcon.appiconset）经 actool 编译 -->
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets/**/*" />
+  </ItemGroup>
+
+</Project>

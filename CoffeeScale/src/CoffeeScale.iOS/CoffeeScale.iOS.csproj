@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- iOS 头工程：复用共享 UI 库 CoffeeScale.UI 与逻辑层。
+         本环境无法安装 ios workload（证书/MSI 信任问题），此工程需在已装
+         `dotnet workload install ios` + Xcode 的 macOS 上构建；此处为完整脚手架。
+         真机：  dotnet build -c Release -r ios-arm64
+         模拟器：dotnet build -c Debug   -r iossimulator-x64
+         RuntimeIdentifier 不写死，构建时用 -r 指定，二者皆可用（见下方 Condition 默认）。 -->
+    <TargetFramework>net9.0-ios</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- 最低 iOS 14.0：与 Info.plist MinimumOSVersion 一致（.NET iOS 以此属性生成该键） -->
+    <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
+    <!-- 默认真机 arm64；传 -r iossimulator-x64 即可切到模拟器，互不冲突 -->
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">ios-arm64</RuntimeIdentifier>
+    <!-- 开发与 TestFlight/Ad-Hoc 签名的授权文件（get-task-allow 仅在开发/调试为 true） -->
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.iOS" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoffeeScale.UI\CoffeeScale.UI.csproj" />
+    <ProjectReference Include="..\CoffeeScale.ViewModels\CoffeeScale.ViewModels.csproj" />
+    <ProjectReference Include="..\CoffeeScale.Core\CoffeeScale.Core.csproj" />
+  </ItemGroup>
+
+  <!-- App 图标资源目录（Assets.xcassets/AppIcon.appiconset）经 actool 编译 -->
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets/**/*" />
+  </ItemGroup>
+
+</Project>

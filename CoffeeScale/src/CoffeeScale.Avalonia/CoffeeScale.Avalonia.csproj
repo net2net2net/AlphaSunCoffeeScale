@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- WinExe：Windows 原生 GUI 子系统，不分配/显示控制台窗口（解决点击弹出 CMD 黑窗） -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <AssemblyName>CoffeeScale</AssemblyName>
+  </PropertyGroup>
+
+  <!-- 发布（Release）默认产出「单个 exe」：运行时+托管程序集+原生渲染 DLL（SkiaSharp/ANGLE/HarfBuzz）
+       全部内嵌进 CoffeeScale.exe，原生库首次运行自解压到临时目录；目标机无需安装 .NET、无外部依赖。
+       Debug 构建不受影响（保留 pdb 便于调试）。发布命令：
+       dotnet publish src/CoffeeScale.Avalonia -c Release -r win-x64 -o dist/win-x64 -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 桌面平台实现（Win32/Skia + 经典桌面生命周期）；UI 控件与主题在共享库 CoffeeScale.UI 中。 -->
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 共享 UI 库（MainWindow / App / 转换器，四端复用）+ 逻辑层。 -->
+    <ProjectReference Include="..\CoffeeScale.UI\CoffeeScale.UI.csproj" />
+    <ProjectReference Include="..\CoffeeScale.ViewModels\CoffeeScale.ViewModels.csproj" />
+    <ProjectReference Include="..\CoffeeScale.Core\CoffeeScale.Core.csproj" />
+  </ItemGroup>
+
+</Project>

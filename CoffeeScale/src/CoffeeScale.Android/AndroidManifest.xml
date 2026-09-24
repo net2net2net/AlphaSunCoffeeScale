@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35" />
+  <!-- 手机/平板均支持；不锁定方向，直屏横屏自由切换（Activity 已声明 ConfigChanges，旋转不重建） -->
+  <supports-screens android:smallScreens="true" android:normalScreens="true"
+      android:largeScreens="true" android:xlargeScreens="true" android:resizeable="true" />
+  <application
+      android:label="手冲咖啡计算器"
+      android:icon="@drawable/icon"
+      android:roundIcon="@drawable/icon"
+      android:theme="@style/MyTheme.NoActionBar"
+      android:allowBackup="true"
+      android:supportsRtl="true" />
+</manifest>

@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- 共享 UI 库：桌面(Windows/Linux/macOS) 与 移动(Android/iOS/MacCatalyst) 多端复用同一份 MainWindow/App。
+         默认多目标 net9.0 + net9.0-android：android 编译时 ANDROID 常量生效，MainWindow 编译为 UserControl
+         （单视图后端不支持 Window 构造）；桌面编译为 Window。
+         iOS / MacCatalyst TFM 由 -p:CoffeeEnableApple=true 按需开启（此时 MainWindow 同样编译为 UserControl）：
+         - 仅在已装 ios/maccatalyst workload 的机器（macOS CI）开启，避免 Windows 本地构建/测试因缺 workload 失败；
+         - IOS/MACCATALYST 编译常量生效，MainWindow.cs 的条件编译与 ANDROID 同路径。
+         桌面单文件发布时传 -p:CoffeeSkipAndroid=true：跳过 net9.0-android TFM，
+         避免桌面 RID(win-x64) 下连带还原 android 的 Mono runtime pack（NU1102）。 -->
+    <TargetFrameworks Condition="'$(CoffeeEnableApple)' == 'true'">net9.0;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="'$(CoffeeEnableApple)' != 'true' And '$(CoffeeSkipAndroid)' != 'true'">net9.0;net9.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="'$(CoffeeEnableApple)' != 'true' And '$(CoffeeSkipAndroid)' == 'true'">net9.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>CoffeeScale.UI</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.5" />
+  </ItemGroup>
+
+  <!-- Avalonia.Headless 仅桌面测试用，android TFM 不引（不支持移动 TFM） -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <PackageReference Include="Avalonia.Headless" Version="11.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 逻辑层与 ViewModel 层均为框架无关类库，四端复用；UI 层只负责把数据绑到控件。 -->
+    <ProjectReference Include="..\CoffeeScale.ViewModels\CoffeeScale.ViewModels.csproj" />
+    <ProjectReference Include="..\CoffeeScale.Core\CoffeeScale.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 咖啡杯窗口图标（Avalonia 资源，四端随包走；运行时经 avares:// 加载，目录可移动） -->
+    <AvaloniaResource Include="Assets/**" />
+  </ItemGroup>
+
+</Project>

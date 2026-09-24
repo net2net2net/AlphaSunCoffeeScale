@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>
+  <string>AlphaSun</string>
+  <key>CFBundleDisplayName</key>
+  <string>AlphaSun 手冲咖啡</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.coffeescale.app</string>
+  <key>CFBundleVersion</key>
+  <string>6</string>
+  <key>CFBundleShortVersionString</key>
+  <string>1.5</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleIconName</key>
+  <string>AppIcon</string>
+  <key>UILaunchStoryboardName</key>
+  <string>Main</string>
+  <key>UIStatusBarStyle</key>
+  <string>UIStatusBarStyleLightContent</string>
+  <key>UIStatusBarHidden</key>
+  <false/>
+  <key>UISupportedInterfaceOrientations</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+  </array>
+  <key>UIDeviceFamily</key>
+  <array>
+    <integer>1</integer>
+    <integer>2</integer>
+  </array>
+  <key>MinimumOSVersion</key>
+  <string>14.0</string>
+</dict>
+</plist>

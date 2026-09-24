@@ -1,0 +1,83 @@
+name: build-ios
+
+# iOS 云构建：在 GitHub 托管的 macOS 机器上编译 iOS arm64 应用并产出「未签名 IPA」。
+# 背景：.NET iOS 的最终链接/打包必须跑在 macOS + Xcode 上，Windows 本机无法完成；
+#       公开仓库的 macOS runner 免费，产出的未签名 IPA 可用 Sideloadly / 爱思助手 /
+#       AltStore / 巨魔(TrollStore) 等工具自签后安装到真机。
+#
+# 触发：手动 workflow_dispatch，或推送影响 CoffeeScale/src 的变更。
+# 产物：Actions 运行页 Artifacts → AlphaSunCoffeeScale-ios-unsigned-r<编号>.ipa
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "CoffeeScale/src/**"
+      - "CoffeeScale/CoffeeScale.sln"
+      - ".github/workflows/build-ios.yml"
+
+jobs:
+  build-ipa:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Select latest Xcode
+        run: |
+          ls -d /Applications/Xcode*.app | sort -V
+          XCODE="$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+          echo "Using $XCODE"
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+
+      - name: Install iOS workload
+        run: dotnet workload install ios
+
+      # 未签名设备构建（CI 无证书）：关闭代码签名并清空授权文件，
+      # MtouchLink=SdkOnly 只裁剪 SDK、保留程序集元数据，避免反射被裁。
+      - name: Publish iOS app (unsigned, arm64)
+        working-directory: CoffeeScale
+        run: >
+          dotnet publish src/CoffeeScale.iOS/CoffeeScale.iOS.csproj
+          -c Release
+          -r ios-arm64
+          -p:CoffeeEnableApple=true
+          -p:EnableCodeSigning=false
+          -p:CodesignKey=
+          -p:CodesignProvision=
+          -p:CodesignEntitlements=
+          -p:MtouchLink=SdkOnly
+          -o "$GITHUB_WORKSPACE/publish/ios"
+
+      - name: Package unsigned IPA
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE/publish/ios"
+          APP="$(find . -maxdepth 1 -type d -name '*.app' | head -1 || true)"
+          if [ -z "$APP" ]; then
+            echo "未找到 .app 产物，目录内容："; ls -la; exit 1
+          fi
+          echo "App bundle: $APP"
+          rm -rf Payload
+          mkdir Payload
+          cp -R "$APP" Payload/
+          IPA="AlphaSunCoffeeScale-1.5-ios-unsigned-r${GITHUB_RUN_NUMBER}.ipa"
+          zip -qry "$IPA" Payload
+          unzip -l "$IPA" | tail -5
+          echo "IPA_PATH=$GITHUB_WORKSPACE/publish/ios/$IPA" >> "$GITHUB_ENV"
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlphaSunCoffeeScale-ios-unsigned-r${{ github.run_number }}
+          path: publish/ios/*.ipa
+          if-no-files-found: error
+          retention-days: 90
