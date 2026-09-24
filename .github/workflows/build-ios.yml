@@ -38,23 +38,21 @@ jobs:
       # .NET 9 iOS workload（iOS 18 SDK 绑定）只支持 Xcode 16.x；镜像里存在大量「残缺壳」目录
       # （16.0/16.0.0、16.4/16.4.0 成对，壳目录只有二进制没有 SDK 数据）。xcrun -find 会受 PATH 干扰，
       # 必须用 DEVELOPER_DIR 显式指向候选目录并强校验 xcodebuild -sdk macosx -find actool。
+      # .NET 9 iOS workload 只支持 Xcode 16.x；镜像里 16.x 成对出现（16.4 完整 / 16.4.0 空壳）。
+      # 空壳目录 SDK 目录存在但缺 SDKSettings.plist（xcodebuild 报 "SDK cannot be located"），
+      # 且 -find actool 探测会误判通过 → 必须用 SDKSettings.plist 文件存在性做硬校验。
       - name: Select a working Xcode 16.x
         run: |
           echo "Available Xcodes:"; ls -d /Applications/Xcode*.app
           XCODE=""
           for CAND in $(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -Vr); do
-            CAND_DEV="$CAND/Contents/Developer"
-            SDK_MAC="$CAND_DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
-            SDK_IOS="$CAND_DEV/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
-            echo "探测 $CAND ..."
-            # 与 .NET iOS 构建同款全路径校验（壳目录的 -sdk macosx 别名能骗过检查，全路径不行）
-            if DEVELOPER_DIR="$CAND_DEV" xcodebuild -sdk "$SDK_MAC" -find actool >/dev/null 2>&1 \
-               && DEVELOPER_DIR="$CAND_DEV" xcodebuild -sdk "$SDK_IOS" -find actool >/dev/null 2>&1 \
-               && DEVELOPER_DIR="$CAND_DEV" xcodebuild -showsdks 2>/dev/null | grep -q iphoneos; then
-              XCODE="$CAND"; echo "OK：SDK 完整"; break
+            DEV="$CAND/Contents/Developer"
+            MAC_PLIST="$DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.plist"
+            IOS_PLIST="$DEV/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/SDKSettings.plist"
+            if [ -f "$MAC_PLIST" ] && [ -f "$IOS_PLIST" ]; then
+              XCODE="$CAND"; echo "OK（SDKSettings.plist 双平台齐全）"; break
             fi
-            echo "该目录 SDK 不完整，跳过（SDKs 目录内容：）"
-            ls "$CAND_DEV/Platforms/MacOSX.platform/Developer/SDKs/" 2>/dev/null || true
+            echo "跳过残缺目录 $CAND（缺 SDKSettings.plist）"
           done
           if [ -z "$XCODE" ]; then
             echo "::error::未找到 SDK 完整的 Xcode 16.x（.NET 9 iOS workload 必需）"; exit 1
