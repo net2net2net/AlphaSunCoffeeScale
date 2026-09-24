@@ -63,6 +63,22 @@ jobs:
           sudo xcodebuild -license accept
           xcodebuild -version
 
+      # 官方缓解（actions/runner-images#12541）：镜像为省空间裁掉部分平台 SDK 数据，
+      # 用 -downloadPlatform 为当前选定的 Xcode 重装 macOS / iOS 平台
+      - name: Repair trimmed platform SDKs
+        run: |
+          echo "== 诊断：SDK 目录实况 =="
+          DEV="$(xcode-select -p)"
+          ls -la "$DEV/Platforms/MacOSX.platform/Developer/SDKs/" || true
+          plutil -p "$DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.plist" 2>/dev/null | head -5 || true
+          echo "== 诊断：重放构建同款调用 =="
+          xcodebuild -sdk "$DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" -find actool || true
+          echo "== 补装平台 =="
+          xcodebuild -downloadPlatform macOS
+          xcodebuild -downloadPlatform iOS
+          echo "== 补装后复验 =="
+          xcodebuild -sdk "$DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk" -find actool
+
       # GitHub 镜像为省空间裁掉了各平台 SDK 的「无版本号别名」（MacOSX.sdk 等），
       # 而 .NET iOS 工具链以别名路径调用 actool/ibtool → 重建符号链接
       - name: Ensure SDK alias symlinks
