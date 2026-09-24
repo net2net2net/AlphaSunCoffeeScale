@@ -96,6 +96,18 @@ jobs:
       - name: Install iOS & MacCatalyst workloads
         run: dotnet workload install ios maccatalyst
 
+      # 图标目录（Assets.xcassets）是否真被 actool 编译成 Assets.car —— 单独跑一次目标并抓 -v:d 日志
+      - name: Diagnose asset catalog compilation
+        working-directory: CoffeeScale
+        run: |
+          dotnet restore src/CoffeeScale.iOS/CoffeeScale.iOS.csproj -r ios-arm64 -p:CoffeeEnableApple=true
+          dotnet msbuild src/CoffeeScale.iOS/CoffeeScale.iOS.csproj \
+            -t:_CompileImageAssets -r ios-arm64 -c Release \
+            -p:CoffeeEnableApple=true -p:EnableCodeSigning=false -v:d 2>&1 \
+            | grep -iE "actool|Assets\.car|_CompileImageAssets|error|warning" | head -60 || true
+          echo "--- Assets.car 落点 ---"
+          find "$GITHUB_WORKSPACE/CoffeeScale/src/CoffeeScale.iOS" -name "Assets.car" || true
+
       # 未签名设备构建（CI 无证书）：关闭代码签名并清空授权文件，
       # MtouchLink=SdkOnly 只裁剪 SDK、保留程序集元数据，避免反射被裁。
       - name: Publish iOS app (unsigned, arm64)

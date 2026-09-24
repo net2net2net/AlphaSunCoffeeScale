@@ -135,22 +135,32 @@ IOS_IMAGES = [
     ("icon-1024.png", 1024),
 ]
 
+# iOS 图标集（经典 iphone / ipad / ios-marketing 三档 idiom）
+# ⚠️ 不要用 "idiom": "universal"：那是 Xcode 14+ 的新格式，actool 在
+#    --minimum-deployment-target 14.0 下不认这套描述，会静默不产出 Assets.car
+#    （2026-09-25 首个 IPA 装真机是空白图标，即此坑）。经典 idiom 对 iOS 14+ 始终有效。
 IOS_CONTENTS = {
     "images": [
-        {"idiom": "universal", "platform": "ios", "size": "20x20", "scale": "2x", "filename": "icon-20@2x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "20x20", "scale": "3x", "filename": "icon-20@3x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "29x29", "scale": "1x", "filename": "icon-29.png"},
-        {"idiom": "universal", "platform": "ios", "size": "29x29", "scale": "2x", "filename": "icon-29@2x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "29x29", "scale": "3x", "filename": "icon-29@3x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "40x40", "scale": "1x", "filename": "icon-40.png"},
-        {"idiom": "universal", "platform": "ios", "size": "40x40", "scale": "2x", "filename": "icon-40@2x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "40x40", "scale": "3x", "filename": "icon-40@3x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "60x60", "scale": "2x", "filename": "icon-60@2x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "60x60", "scale": "3x", "filename": "icon-60@3x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "76x76", "scale": "1x", "filename": "icon-76.png"},
-        {"idiom": "universal", "platform": "ios", "size": "76x76", "scale": "2x", "filename": "icon-76@2x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "83.5x83.5", "scale": "2x", "filename": "icon-83.5@2x.png"},
-        {"idiom": "universal", "platform": "ios", "size": "1024x1024", "scale": "1x", "filename": "icon-1024.png"},
+        # iPhone
+        {"idiom": "iphone", "size": "20x20", "scale": "2x", "filename": "icon-20@2x.png"},
+        {"idiom": "iphone", "size": "20x20", "scale": "3x", "filename": "icon-20@3x.png"},
+        {"idiom": "iphone", "size": "29x29", "scale": "1x", "filename": "icon-29.png"},
+        {"idiom": "iphone", "size": "29x29", "scale": "2x", "filename": "icon-29@2x.png"},
+        {"idiom": "iphone", "size": "29x29", "scale": "3x", "filename": "icon-29@3x.png"},
+        {"idiom": "iphone", "size": "40x40", "scale": "2x", "filename": "icon-40@2x.png"},
+        {"idiom": "iphone", "size": "40x40", "scale": "3x", "filename": "icon-40@3x.png"},
+        {"idiom": "iphone", "size": "60x60", "scale": "2x", "filename": "icon-60@2x.png"},
+        {"idiom": "iphone", "size": "60x60", "scale": "3x", "filename": "icon-60@3x.png"},
+        # iPad
+        {"idiom": "ipad", "size": "29x29", "scale": "1x", "filename": "icon-29.png"},
+        {"idiom": "ipad", "size": "29x29", "scale": "2x", "filename": "icon-29@2x.png"},
+        {"idiom": "ipad", "size": "40x40", "scale": "1x", "filename": "icon-40.png"},
+        {"idiom": "ipad", "size": "40x40", "scale": "2x", "filename": "icon-40@2x.png"},
+        {"idiom": "ipad", "size": "76x76", "scale": "1x", "filename": "icon-76.png"},
+        {"idiom": "ipad", "size": "76x76", "scale": "2x", "filename": "icon-76@2x.png"},
+        {"idiom": "ipad", "size": "83.5x83.5", "scale": "2x", "filename": "icon-83.5@2x.png"},
+        # App Store
+        {"idiom": "ios-marketing", "size": "1024x1024", "scale": "1x", "filename": "icon-1024.png"},
     ],
     "info": {"author": "xcode", "version": 1},
 }
