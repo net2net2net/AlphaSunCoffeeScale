@@ -116,6 +116,10 @@ jobs:
         run: |
           echo "--- publish/ios ---"
           ls -la "$GITHUB_WORKSPACE/publish/ios" || echo "(publish/ios 不存在)"
+          echo "--- Assets.car 搜索（图标是否编译进包）---"
+          find "$GITHUB_WORKSPACE/CoffeeScale/src/CoffeeScale.iOS" -name "Assets.car" 2>/dev/null || true
+          echo "--- ImageAsset 项（actool 输入）---"
+          (cd CoffeeScale && dotnet msbuild src/CoffeeScale.iOS/CoffeeScale.iOS.csproj -getItem:ImageAsset -p:RuntimeIdentifier=ios-arm64 -p:CoffeeEnableApple=true 2>/dev/null | head -20) || true
           echo "--- bin tree (前 60 行) ---"
           find "$GITHUB_WORKSPACE/CoffeeScale/src/CoffeeScale.iOS/bin" -maxdepth 6 2>/dev/null | head -60 || true
 

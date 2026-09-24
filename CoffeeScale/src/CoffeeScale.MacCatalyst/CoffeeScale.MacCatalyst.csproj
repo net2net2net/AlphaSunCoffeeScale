@@ -14,6 +14,8 @@
     <!-- 与 Info.plist LSMinimumSystemVersion 对齐（Mac Catalyst 15.0 ≙ macOS 12 Monterey） -->
     <SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
     <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">maccatalyst-arm64</RuntimeIdentifier>
+    <!-- 同 iOS：AppIcon 必须显式给，否则 actool 不产出 Assets.car（应用无图标） -->
+    <AppIcon>AppIcon</AppIcon>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
 

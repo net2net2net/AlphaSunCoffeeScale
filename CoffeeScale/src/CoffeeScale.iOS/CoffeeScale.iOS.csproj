@@ -24,6 +24,11 @@
     <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">ios-arm64</RuntimeIdentifier>
     <!-- 开发与 TestFlight/Ad-Hoc 签名的授权文件（get-task-allow 仅在开发/调试为 true） -->
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <!-- 应用图标：目录 Assets.xcassets/AppIcon.appiconset。
+         AppIcon 属性必须显式给（= appiconset 目录名），否则 actool 不生成 Assets.car，
+         装到真机上是「空白默认图标」——2026-09-25 打包首个 IPA 时踩到（包内无 Assets.car）。
+         Link 元数据对齐 macios 默认项定义，保证 xcassets 目录结构在 actool 输入里被还原。 -->
+    <AppIcon>AppIcon</AppIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,9 +42,12 @@
     <ProjectReference Include="..\CoffeeScale.Core\CoffeeScale.Core.csproj" />
   </ItemGroup>
 
-  <!-- App 图标资源目录（Assets.xcassets/AppIcon.appiconset）经 actool 编译 -->
+  <!-- App 图标资源目录（Assets.xcassets/AppIcon.appiconset）经 actool 编译为 Assets.car -->
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets/**/*" />
+    <ImageAsset Include="Assets.xcassets/**/*.*" Exclude="$(DefaultItemExcludes)">
+      <Link>$([MSBuild]::MakeRelative('$(MSBuildProjectDirectory)', '%(FullPath)'))</Link>
+      <IsDefaultItem>false</IsDefaultItem>
+    </ImageAsset>
   </ItemGroup>
 
 </Project>
