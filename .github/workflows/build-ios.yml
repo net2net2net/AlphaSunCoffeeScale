@@ -100,9 +100,9 @@ jobs:
       - name: Diagnose asset catalog compilation
         working-directory: CoffeeScale
         run: |
-          dotnet restore src/CoffeeScale.iOS/CoffeeScale.iOS.csproj -r ios-arm64 -p:CoffeeEnableApple=true
+          dotnet restore src/CoffeeScale.iOS/CoffeeScale.iOS.csproj -p:RuntimeIdentifier=ios-arm64 -p:CoffeeEnableApple=true
           dotnet msbuild src/CoffeeScale.iOS/CoffeeScale.iOS.csproj \
-            -t:_CompileImageAssets -r ios-arm64 -c Release \
+            -t:_CompileImageAssets -p:RuntimeIdentifier=ios-arm64 -c Release \
             -p:CoffeeEnableApple=true -p:EnableCodeSigning=false -v:d 2>&1 \
             | grep -iE "actool|Assets\.car|_CompileImageAssets|error|warning" | head -60 || true
           echo "--- Assets.car 落点 ---"
