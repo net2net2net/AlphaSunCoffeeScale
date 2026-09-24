@@ -30,6 +30,10 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
+      - name: Verify SDK version
+        working-directory: CoffeeScale
+        run: dotnet --version   # global.json 钉住 9.x，防止 runner 默认 SDK 10 抢占
+
       - name: Select latest Xcode
         run: |
           ls -d /Applications/Xcode*.app | sort -V
@@ -38,8 +42,10 @@ jobs:
           sudo xcode-select -s "$XCODE"
           xcodebuild -version
 
-      - name: Install iOS workload
-        run: dotnet workload install ios
+      # 装 ios + maccatalyst 两个 workload：UI 库多目标含 net9.0-maccatalyst，
+      # 还原阶段会评估全部 TFM，缺 maccatalyst workload 会报 NETSDK1147
+      - name: Install iOS & MacCatalyst workloads
+        run: dotnet workload install ios maccatalyst
 
       # 未签名设备构建（CI 无证书）：关闭代码签名并清空授权文件，
       # MtouchLink=SdkOnly 只裁剪 SDK、保留程序集元数据，避免反射被裁。
