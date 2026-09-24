@@ -115,12 +115,19 @@ jobs:
       - name: Package unsigned IPA
         run: |
           set -euo pipefail
-          cd "$GITHUB_WORKSPACE/publish/ios"
-          APP="$(find . -maxdepth 1 -type d -name '*.app' | head -1 || true)"
+          # 优先 publish 输出目录，未开 ArchiveOnBuild 时 .app 会留在 bin 目录 → 全仓兜底搜索
+          APP="$(find "$GITHUB_WORKSPACE/publish/ios" -maxdepth 1 -type d -name '*.app' 2>/dev/null | head -1 || true)"
           if [ -z "$APP" ]; then
-            echo "未找到 .app 产物，目录内容："; ls -la; exit 1
+            echo "publish 目录无 .app，改为在 iOS bin 目录搜索..."
+            APP="$(find "$GITHUB_WORKSPACE/CoffeeScale/src/CoffeeScale.iOS/bin" -type d -name '*.app' | head -1 || true)"
+          fi
+          if [ -z "$APP" ]; then
+            echo "::error::未找到 .app 产物（全仓 .app 列表如下）"
+            find "$GITHUB_WORKSPACE" -type d -name "*.app" -not -path "*/Payload/*" || true
+            exit 1
           fi
           echo "App bundle: $APP"
+          cd "$GITHUB_WORKSPACE/publish/ios" 2>/dev/null || mkdir -p "$GITHUB_WORKSPACE/publish/ios" && cd "$GITHUB_WORKSPACE/publish/ios"
           rm -rf Payload
           mkdir Payload
           cp -R "$APP" Payload/
