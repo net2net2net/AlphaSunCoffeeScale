@@ -19,7 +19,8 @@ on:
 
 jobs:
   build-ipa:
-    runs-on: macos-latest
+    # macos-15 镜像保留 Xcode 16.x；macos-latest（26）只有 Xcode 26，与 .NET 9 iOS workload 不兼容
+    runs-on: macos-15
     timeout-minutes: 60
     steps:
       - name: Checkout
