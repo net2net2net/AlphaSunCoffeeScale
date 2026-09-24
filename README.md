@@ -57,9 +57,9 @@
 ee77f3caee1f604aa050e4669487ff526d62d14bc098340a216762167612e8ec  AlphaSunCoffeeScale-1.5.exe
 88be78e86cb2bc2a78d3da5f261f6f3883c8fa0c137614ec244db218acef50f4  AlphaSunCoffeeScale-1.5.apk
 04d8b4dbfb1583916422af7dbf73d8cf03e0a0d97a585cb14926109a56e63ef5  AlphaSunCoffeeScale-1.5-ios-unsigned.ipa
-f9cb300a2148b93d9358afe99835066e72118369bfd2b3ac51453c8c643e8d43  AlphaSunCoffeeScale-1.5-linux-x64.tar.gz
-45878a5168d8fa3bd91d7a1122ee5d5fd5432f55e5fc9b7d78fa0d0726a0d634  AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz
-63dfd1b66c766badb7fa4f0af2327b53bd3f8b5867d76c5d7c8c9e800c164566  AlphaSunCoffeeScale-1.5-macos-x64.tar.gz
+52e651d97403f39b41057ef3ac8ad7d6f545479dbc342283fb2a7224001afeed  AlphaSunCoffeeScale-1.5-linux-x64.tar.gz
+c0bacc9f4b5c8fa78b207f65b2dca9e73af8e557a0fba595412ce26ec2dc4e66  AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz
+af95266817b4ea6aa3c99269d679e17f7bf6b39f8db68370c9903b38b28e3b42  AlphaSunCoffeeScale-1.5-macos-x64.tar.gz
 ```
 
 > Windows 下可用 PowerShell 验证：`Get-FileHash .\AlphaSunCoffeeScale-1.5.exe -Algorithm SHA256`
