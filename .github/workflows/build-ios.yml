@@ -35,17 +35,25 @@ jobs:
         working-directory: CoffeeScale
         run: dotnet --version   # global.json 钉住 9.x，防止 runner 默认 SDK 10 抢占
 
-      # .NET 9 iOS workload（iOS 18 SDK 绑定）只支持 Xcode 16.x，
-      # 不能选 runner 上的最新 Xcode 26.x（SDK 路径与 actool 均不兼容）
-      - name: Select Xcode 16.x
+      # .NET 9 iOS workload（iOS 18 SDK 绑定）只支持 Xcode 16.x，且镜像里可能同时存在
+      # 完整版与残缺壳目录（如 Xcode_16.4.app 与 Xcode_16.4.0.app）→ 逐个探测，只选 SDK 完整可用的
+      - name: Select a working Xcode 16.x
         run: |
           echo "Available Xcodes:"; ls -d /Applications/Xcode*.app
-          XCODE="$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -1 || true)"
+          XCODE=""
+          for CAND in $(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -Vr); do
+            echo "探测 $CAND ..."
+            sudo xcode-select -s "$CAND"
+            if xcrun -sdk macosx -find actool >/dev/null 2>&1 \
+               && xcodebuild -showsdks 2>/dev/null | grep -q iphoneos; then
+              XCODE="$CAND"; echo "OK：SDK 完整"; break
+            fi
+            echo "该目录 SDK 不完整，跳过"
+          done
           if [ -z "$XCODE" ]; then
-            echo "::error::未找到 Xcode 16.x（.NET 9 iOS workload 必需）"; exit 1
+            echo "::error::未找到 SDK 完整的 Xcode 16.x（.NET 9 iOS workload 必需）"; exit 1
           fi
           echo "Using $XCODE"
-          sudo xcode-select -s "$XCODE"
           sudo xcodebuild -license accept
           xcodebuild -version
 
