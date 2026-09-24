@@ -37,7 +37,7 @@ jobs:
         working-directory: CoffeeScale
         run: >
           dotnet publish src/CoffeeScale.Avalonia/CoffeeScale.Avalonia.csproj
-          -c Release -r linux-x64
+          -c Release -r linux-x64 -p:CoffeeSkipAndroid=true
           -o "$GITHUB_WORKSPACE/publish/linux-x64"
 
       - name: Check native deps
@@ -90,7 +90,7 @@ jobs:
         working-directory: CoffeeScale
         run: >
           dotnet publish src/CoffeeScale.Avalonia/CoffeeScale.Avalonia.csproj
-          -c Release -r ${{ matrix.rid }}
+          -c Release -r ${{ matrix.rid }} -p:CoffeeSkipAndroid=true
           -o "$GITHUB_WORKSPACE/publish/${{ matrix.rid }}"
 
       - name: Build .app bundle
