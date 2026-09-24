@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=AlphaSun 手冲咖啡
+GenericName=Coffee Scale
+Comment=没有感情的手冲咖啡智能计算器（AlphaSunCoffeeScale）
+Exec=AlphaSunCoffeeScale
+Icon=alphasuncoffeescale
+Terminal=false
+Categories=Utility;Education;
+Keywords=coffee;pourover;brew;scale;
+StartupWMClass=CoffeeScale

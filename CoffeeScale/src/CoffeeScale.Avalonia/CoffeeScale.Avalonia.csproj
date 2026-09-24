@@ -11,18 +11,44 @@
     <AssemblyName>CoffeeScale</AssemblyName>
   </PropertyGroup>
 
-  <!-- 发布（Release）默认产出「单个 exe」：运行时+托管程序集+原生渲染 DLL（SkiaSharp/ANGLE/HarfBuzz）
-       全部内嵌进 CoffeeScale.exe，原生库首次运行自解压到临时目录；目标机无需安装 .NET、无外部依赖。
-       Debug 构建不受影响（保留 pdb 便于调试）。发布命令：
-       dotnet publish src/CoffeeScale.Avalonia -c Release -r win-x64 -o dist/win-x64 -->
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+  <!-- 目标运行时：Release 默认 win-x64（保持原有 Windows 单文件体验），
+       出 Linux / macOS 包时用 -r 覆盖即可：
+         dotnet publish -c Release -r linux-x64   -o dist/linux-x64
+         dotnet publish -c Release -r osx-arm64   -o dist/osx-arm64
+         dotnet publish -c Release -r osx-x64     -o dist/osx-x64
+       Debug 构建不设 RID（本机开发用，跨平台无差异）。 -->
+  <PropertyGroup>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' And '$(Configuration)' == 'Release'">win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <!-- 记录当前目标属于哪类平台，供下方条件使用（避免对空属性调用字符串函数报错） -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' != ''">
+    <_IsWindowsRid Condition="$(RuntimeIdentifier.StartsWith('win'))">true</_IsWindowsRid>
+    <_IsMacRid Condition="$(RuntimeIdentifier.StartsWith('osx'))">true</_IsMacRid>
+    <_IsLinuxRid Condition="$(RuntimeIdentifier.StartsWith('linux')) Or $(RuntimeIdentifier.StartsWith('linux-musl'))">true</_IsLinuxRid>
+  </PropertyGroup>
+
+  <!-- 发布（Release）默认产出「单个可执行文件」：运行时+托管程序集+原生渲染库
+       （SkiaSharp/ANGLE/HarfBuzz/AvaloniaNative）全部内嵌，首次运行自解压到临时目录；
+       目标机无需安装 .NET。Debug 构建不受影响（保留 pdb 便于调试）。 -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' And '$(RuntimeIdentifier)' != ''">
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- 仅 Windows 目标需要 Win32 应用清单与 .ico 图标（ELF / Mach-O 上无意义） -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == '' Or '$(_IsWindowsRid)' == 'true'">
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <!-- macOS 目标：Avalonia.Native(Cocoa) 后端，最低 macOS 11 Big Sur -->
+  <PropertyGroup Condition="'$(_IsMacRid)' == 'true'">
+    <SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>

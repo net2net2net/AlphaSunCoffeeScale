@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Win32;
 using CoffeeScale.UI;
 using CoffeeScale.ViewModels;
 
@@ -54,7 +53,15 @@ public static class Program
         try { File.AppendAllText(LogPath, "---- " + DateTime.Now + " ----\n" + text + "\n"); } catch { }
         if (System.Threading.Interlocked.Increment(ref _shown) <= 1)
         {
-            try { MessageBoxW(IntPtr.Zero, text, "CoffeeScale 遇到错误", 0x10 | 0x1000); } catch { }
+            // user32 弹窗仅 Windows 可用；Linux / macOS 只写日志（已写），再打到 stderr 便于终端排查
+            if (OperatingSystem.IsWindows())
+            {
+                try { MessageBoxW(IntPtr.Zero, text, "CoffeeScale 遇到错误", 0x10 | 0x1000); } catch { }
+            }
+            else
+            {
+                try { Console.Error.WriteLine(text); } catch { }
+            }
         }
     }
 
@@ -78,9 +85,12 @@ public static class Program
     }
 
     public static AppBuilder BuildAvaloniaApp() =>
-        // 显式 Win32 + Skia：本程序仅面向 Windows（win-x64），避免 UsePlatformDetect 的平台探测歧义
+        // UsePlatformDetect：按目标平台自动选后端 ——
+        //   Windows → Win32（Skia 渲染）、Linux → X11、macOS → Avalonia.Native（Cocoa）
+        // 这样一套桌面工程即可同时出 win-x64 / linux-x64 / osx-arm64 / osx-x64 四个产物。
+        // （原先写死 UseWin32() 会导致 Linux/macOS 启动即崩：找不到 Win32 后端。）
         AppBuilder.Configure<App>()
-            .UseWin32()
+            .UsePlatformDetect()
             .UseSkia()
             .UseIconFontFallbacks()   // 内嵌 emoji/符号字体回退，图标四端一致
             .LogToTrace();

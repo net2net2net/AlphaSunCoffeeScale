@@ -18,6 +18,8 @@ from PIL import Image, ImageDraw, ImageFilter
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IOS_DIR = os.path.join(ROOT, "src", "CoffeeScale.iOS", "Assets.xcassets", "AppIcon.appiconset")
 MAC_DIR = os.path.join(ROOT, "src", "CoffeeScale.MacCatalyst", "Assets.xcassets", "AppIcon.appiconset")
+# 桌面版（Windows/Linux/macOS 原生）资源目录：macOS .app bundle 用 icns，Linux .desktop 用 png
+DESKTOP_DIR = os.path.join(ROOT, "src", "CoffeeScale.Avalonia", "Assets")
 
 # 暖色「仪式感」调色板（与 DESIGN.md 一致）
 CARAMEL = (216, 160, 102)
@@ -211,9 +213,24 @@ def write_set(img_dir, images, contents):
     print("  wrote Contents.json (%d icons)" % len(images))
 
 
+def write_desktop_icons(master: Image.Image):
+    """桌面版图标：macOS .app 用 AppIcon.icns，Linux .desktop / 窗口图标用 PNG。"""
+    os.makedirs(DESKTOP_DIR, exist_ok=True)
+    icns = os.path.join(DESKTOP_DIR, "AppIcon.icns")
+    master.save(icns, format="ICNS",
+                sizes=[(16, 16), (32, 32), (64, 64), (128, 128), (256, 256), (512, 512), (1024, 1024)])
+    print("  wrote AppIcon.icns")
+    for px in (256, 512):
+        p = os.path.join(DESKTOP_DIR, "icon-%d.png" % px)
+        downscale(master, px).save(p, "PNG")
+        print("  wrote icon-%d.png" % px)
+
+
 if __name__ == "__main__":
     print("==> iOS AppIcon set")
     write_set(IOS_DIR, IOS_IMAGES, IOS_CONTENTS)
     print("==> MacCatalyst AppIcon set")
     write_set(MAC_DIR, MAC_IMAGES, MAC_CONTENTS)
+    print("==> Desktop icons (macOS icns + Linux png)")
+    write_desktop_icons(make_master(1024))
     print("done.")
