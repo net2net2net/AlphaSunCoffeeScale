@@ -112,11 +112,18 @@ jobs:
           -p:MtouchLink=SdkOnly
           -o "$GITHUB_WORKSPACE/publish/ios"
 
+      - name: Show publish output tree
+        run: |
+          echo "--- publish/ios ---"
+          ls -la "$GITHUB_WORKSPACE/publish/ios" || echo "(publish/ios 不存在)"
+          echo "--- bin tree (前 60 行) ---"
+          find "$GITHUB_WORKSPACE/CoffeeScale/src/CoffeeScale.iOS/bin" -maxdepth 6 2>/dev/null | head -60 || true
+
       - name: Package unsigned IPA
         run: |
           set -euo pipefail
-          # 优先 publish 输出目录，未开 ArchiveOnBuild 时 .app 会留在 bin 目录 → 全仓兜底搜索
-          APP="$(find "$GITHUB_WORKSPACE/publish/ios" -maxdepth 1 -type d -name '*.app' 2>/dev/null | head -1 || true)"
+          # iOS 头工程 OutputType=Exe 时才生成 .app；优先 publish 输出目录，再兜底 bin 目录
+          APP="$(find "$GITHUB_WORKSPACE/publish/ios" -maxdepth 2 -type d -name '*.app' 2>/dev/null | head -1 || true)"
           if [ -z "$APP" ]; then
             echo "publish 目录无 .app，改为在 iOS bin 目录搜索..."
             APP="$(find "$GITHUB_WORKSPACE/CoffeeScale/src/CoffeeScale.iOS/bin" -type d -name '*.app' | head -1 || true)"
@@ -127,6 +134,7 @@ jobs:
             exit 1
           fi
           echo "App bundle: $APP"
+          ls -la "$APP"
           cd "$GITHUB_WORKSPACE/publish/ios" 2>/dev/null || mkdir -p "$GITHUB_WORKSPACE/publish/ios" && cd "$GITHUB_WORKSPACE/publish/ios"
           rm -rf Payload
           mkdir Payload

@@ -8,8 +8,16 @@
          模拟器：dotnet build -c Debug   -r iossimulator-x64
          RuntimeIdentifier 不写死，构建时用 -r 指定，二者皆可用（见下方 Condition 默认）。 -->
     <TargetFramework>net9.0-ios</TargetFramework>
+    <!-- ⚠️ 必须 Exe：macios 仅在 OutputType=Exe 时置 _CanOutputAppBundle=true。
+         缺此项时 build/publish 仍会「成功」，但**静默跳过 .app 打包**且无任何报错
+         （只打印空的 "Created the package: "），产物目录空空如也 —— 2026-09-24 踩坑记录。 -->
+    <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- 手动配置证书/描述文件（CI 无证书时用 -p:EnableCodeSigning=false 关闭签名） -->
+    <ProvisioningType>manual</ProvisioningType>
+    <!-- 真机链接模式：只裁剪 SDK、保留程序集元数据，避免反射（Avalonia 绑定）被裁掉 -->
+    <MtouchLink>SdkOnly</MtouchLink>
     <!-- 最低 iOS 14.0：与 Info.plist MinimumOSVersion 一致（.NET iOS 以此属性生成该键） -->
     <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
     <!-- 默认真机 arm64；传 -r iossimulator-x64 即可切到模拟器，互不冲突 -->

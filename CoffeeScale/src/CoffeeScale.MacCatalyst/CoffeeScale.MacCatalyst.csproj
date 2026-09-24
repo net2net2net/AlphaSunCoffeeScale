@@ -7,6 +7,8 @@
          构建：dotnet build -c Release -r maccatalyst-arm64 （Intel Mac 用 -r maccatalyst-x64）
          RuntimeIdentifier 不写死，默认 arm64，可经 -r 覆盖。 -->
     <TargetFramework>net9.0-maccatalyst</TargetFramework>
+    <!-- 同 iOS 头工程：macios 靠 OutputType=Exe 才生成 app bundle，缺则静默无产物 -->
+    <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- 与 Info.plist LSMinimumSystemVersion 对齐（Mac Catalyst 15.0 ≙ macOS 12 Monterey） -->

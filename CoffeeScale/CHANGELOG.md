@@ -17,6 +17,15 @@
 - 删除 `MainWindow` 中从未使用的字段 `_homeMasterPlanWindow`，消除 `CS0169` 编译警告。
 - 修复 `MainWindowHeadlessTests` 中 `waterBox.Text` 可空转换警告（CS8600）。
 
+### Fixed
+- **iOS / MacCatalyst 头工程补上 `<OutputType>Exe</OutputType>` + 入口点 `Main.cs`（关键修复）**：
+  此前两个 head 沿用 SDK 默认的 `Library`，macios 因 `_CanOutputAppBundle=false` **静默跳过 `.app` 打包**——
+  `dotnet publish` 退出码 0、日志只打印一行空的 `Created the package: `，产物目录空无一物（CI run#13/#14 连续踩坑）。
+  改为 `Exe` 后正常产出 `CoffeeScale.iOS.app`；配套新增 `Main.cs`（`UIApplication.Main(args, null, typeof(AppDelegate))`），
+  否则会报 `CS5001 无入口点`。
+- 新增 GitHub Actions 云构建工作流 `.github/workflows/build-ios.yml`：macOS runner 上编译 arm64 并产出未签名 IPA。
+  内置三处镜像坑的规避：SDK 版本 `global.json` 钉 9.x、硬编码选 `Xcode_16.4.app`（16.4.0 是残缺壳）、重建 SDK 无版本别名符号链接。
+
 ## [1.5] — 2026-09-14
 
 ### Changed（调整）
