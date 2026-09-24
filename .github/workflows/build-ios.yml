@@ -46,7 +46,20 @@ jobs:
           fi
           echo "Using $XCODE"
           sudo xcode-select -s "$XCODE"
+          sudo xcodebuild -license accept
           xcodebuild -version
+
+      # GitHub 镜像为省空间会裁掉部分平台 SDK；actool 经 MacOSX SDK 定位，
+      # 缺失时按官方 mitigation 用 -downloadPlatform 补装
+      - name: Ensure MacOSX SDK present
+        run: |
+          xcodebuild -showsdks || true
+          if ! xcodebuild -showsdks 2>/dev/null | grep -q "macosx"; then
+            echo "MacOSX SDK 缺失，开始补装（可能需要几分钟）..."
+            xcodebuild -downloadPlatform macOS
+          else
+            echo "MacOSX SDK 已存在"
+          fi
 
       # 装 ios + maccatalyst 两个 workload：UI 库多目标含 net9.0-maccatalyst，
       # 还原阶段会评估全部 TFM，缺 maccatalyst workload 会报 NETSDK1147
