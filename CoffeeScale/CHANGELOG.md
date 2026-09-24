@@ -7,6 +7,9 @@
 ## [Unreleased]
 
 ### Added
+- **🎉 iOS 安装包（未签名 IPA）首次出包**：`dist/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa`（19.4 MB，arm64 真机 AOT 包，
+  iOS 14+ / iPhone & iPad 通用）。由 GitHub Actions（`build-ios.yml`）在 macOS runner 上云构建产出，
+  可用 Sideloadly / 爱思助手 / AltStore 自签安装（免费 ID 7 天），或巨魔 TrollStore 免签直装。
 - **iOS / MacCatalyst 头工程完成脚手架**：AppDelegate 接入 `UseIconFontFallbacks()`，与 Android / 桌面共享同一套字体回退配置，图标四端一致（关闭 [Unreleased] 计划项）。
 - iOS / MacCatalyst `Info.plist` 版本对齐到 `1.5`，新增 `CFBundleIconName=AppIcon` 与设备族声明；`CFBundleVersion` 对齐 Android `ApplicationVersion=6`。
 - 新增 `Assets.xcassets/AppIcon.appiconset` 图标资源目录：程序化生成暖色咖啡主题图标（iOS 14 个尺寸 + MacCatalyst 10 个尺寸）。
@@ -25,6 +28,8 @@
   否则会报 `CS5001 无入口点`。
 - 新增 GitHub Actions 云构建工作流 `.github/workflows/build-ios.yml`：macOS runner 上编译 arm64 并产出未签名 IPA。
   内置三处镜像坑的规避：SDK 版本 `global.json` 钉 9.x、硬编码选 `Xcode_16.4.app`（16.4.0 是残缺壳）、重建 SDK 无版本别名符号链接。
+- iOS 图标改用经典 `iphone` / `ipad` / `ios-marketing` 三档 idiom（`idiom: universal` 是 Xcode 14+ 新格式，
+  actool 在部署目标 14.0 下不认，不产出 `Assets.car`）；最终 IPA 以 `CFBundleIconFiles` + PNG 直接入包的方式兜底注入图标。
 
 ## [1.5] — 2026-09-14
 

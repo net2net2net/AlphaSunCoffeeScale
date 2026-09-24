@@ -1,6 +1,6 @@
 # AlphaSunCoffeeScale · 没有感情的手冲咖啡智能计算器
 
-> **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，从豆子烘焙度（烘焙值 Ag）、处理方式、豆钟、产地、密度、生长海拔、 生豆烘焙日期、养豆期，到手冲咖啡的冲煮方式 （冲煮手法）、粉量、粉水比、滤杯、滤纸、风味目标 等等维度构建手冲咖啡的建模和逻辑关系。目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡。 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / 安卓 **。：
+> **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，从豆子烘焙度（烘焙值 Ag）、处理方式、豆钟、产地、密度、生长海拔、 生豆烘焙日期、养豆期，到手冲咖啡的冲煮方式 （冲煮手法）、粉量、粉水比、滤杯、滤纸、风味目标 等等维度构建手冲咖啡的建模和逻辑关系。目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡。 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / 安卓 / iOS**（iOS 为未签名 IPA，需自签或巨魔安装）：
 >
 > | | |
 > |---|---|
@@ -17,6 +17,10 @@
 |---|---|---|---|---|
 | Windows | `AlphaSunCoffeeScale-1.5.exe` | 45.3 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.exe) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.exe) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.exe) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.exe) |
 | Android | `AlphaSunCoffeeScale-1.5.apk` | 95.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) |
+| iOS | `AlphaSunCoffeeScale-1.5-ios-unsigned.ipa` | 19.4 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) |
+
+> iOS 版本由 GitHub Actions 云构建产出（arm64 真机 AOT 包，**未签名**），也可用
+> `gh workflow run build-ios.yml` 自行触发重新构建，或参考 `docs/ios-build.md` 在 Mac 上签名出正式包。
 
 > 历史版本与最新发布统一见：[GitHub Releases](https://github.com/net2net2net/AlphaSunCoffeeScale/releases) ｜ [Gitee 发行版](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases)
 
@@ -29,12 +33,18 @@
 
 - **Windows（exe）**：下载后双击运行即可——单文件自包含，**无需安装 .NET 或任何运行库**；如被 SmartScreen 拦截，点「更多信息 → 仍要运行」。配置与冲煮记录（`settings.json` / `brews.json`）生成在程序同目录。
 - **Android（apk）**：把 APK 传到手机点击安装，首次需在系统里**允许「安装未知来源应用」**；或用数据线连接后执行 `adb install -r AlphaSunCoffeeScale-1.5.apk`。已装旧版本可直接覆盖升级（数据保留）。
+- **iOS（未签名 ipa）**：**不能直接双击安装**，需二选一：
+  1. **自签安装（通用）**：Sideloadly / 爱思助手 / AltStore，用你的 Apple ID 签名后安装。
+     免费 Apple ID 有效期 **7 天**，到期用同一工具重签即可（App 数据保留）。
+  2. **巨魔 TrollStore（免签、永久）**：iOS 14.0–16.6.1 / 17.0（须已装巨魔）可直接安装未签名 IPA，无需 Apple ID。
+  > 未签名包不含企业证书，**App 功能与签名版完全一致**；iOS 14+ / iPhone & iPad 通用（arm64）。
 
 ### 完整性校验（SHA-256）
 
 ```text
 ee77f3caee1f604aa050e4669487ff526d62d14bc098340a216762167612e8ec  AlphaSunCoffeeScale-1.5.exe
 88be78e86cb2bc2a78d3da5f261f6f3883c8fa0c137614ec244db218acef50f4  AlphaSunCoffeeScale-1.5.apk
+04d8b4dbfb1583916422af7dbf73d8cf03e0a0d97a585cb14926109a56e63ef5  AlphaSunCoffeeScale-1.5-ios-unsigned.ipa
 ```
 
 > Windows 下可用 PowerShell 验证：`Get-FileHash .\AlphaSunCoffeeScale-1.5.exe -Algorithm SHA256`
