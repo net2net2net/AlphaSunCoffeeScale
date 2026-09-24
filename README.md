@@ -1,6 +1,6 @@
 # AlphaSunCoffeeScale · 没有感情的手冲咖啡智能计算器
 
-> **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，从豆子烘焙度（烘焙值 Ag）、处理方式、豆钟、产地、密度、生长海拔、 生豆烘焙日期、养豆期，到手冲咖啡的冲煮方式 （冲煮手法）、粉量、粉水比、滤杯、滤纸、风味目标 等等维度构建手冲咖啡的建模和逻辑关系。目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡。 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / 安卓 / iOS**（iOS 为未签名 IPA，需自签或巨魔安装）：
+> **AlphaSunCoffeeScale** —— 没有感情的手冲咖啡智能计算器， 一套手冲咖啡冲煮方案和计算工具，从豆子烘焙度（烘焙值 Ag）、处理方式、豆钟、产地、密度、生长海拔、 生豆烘焙日期、养豆期，到手冲咖啡的冲煮方式 （冲煮手法）、粉量、粉水比、滤杯、滤纸、风味目标 等等维度构建手冲咖啡的建模和逻辑关系。目标是让广大爱者通过新手模式冲煮出一杯60分的咖啡，通过专业模式冲煮出一杯80分的咖啡。 模拟智能称 + 冲煮方案生成 + 简易计算器 + 大师方案清单，覆盖 **Windows / Linux / macOS / 安卓 / iOS**（iOS 为未签名 IPA，需自签或巨魔安装）：
 >
 > | | |
 > |---|---|
@@ -17,6 +17,9 @@
 |---|---|---|---|---|
 | Windows | `AlphaSunCoffeeScale-1.5.exe` | 45.3 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.exe) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.exe) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.exe) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.exe) |
 | Android | `AlphaSunCoffeeScale-1.5.apk` | 95.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5.apk) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5.apk) |
+| Linux (x64) | `AlphaSunCoffeeScale-1.5-linux-x64.tar.gz` | 38.7 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-linux-x64.tar.gz) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-linux-x64.tar.gz) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-linux-x64.tar.gz) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-linux-x64.tar.gz) |
+| macOS (Apple Silicon) | `AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz` | 32.8 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz) |
+| macOS (Intel) | `AlphaSunCoffeeScale-1.5-macos-x64.tar.gz` | 34.4 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-macos-x64.tar.gz) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-macos-x64.tar.gz) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-macos-x64.tar.gz) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-macos-x64.tar.gz) |
 | iOS | `AlphaSunCoffeeScale-1.5-ios-unsigned.ipa` | 19.4 MB | [仓库文件](https://github.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) · [Release](https://github.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) | [仓库文件](https://gitee.com/net2net2net/AlphaSunCoffeeScale/raw/main/dist/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) · [Release](https://gitee.com/net2net2net/AlphaSunCoffeeScale/releases/download/v1.5/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa) |
 
 > iOS 版本由 GitHub Actions 云构建产出（arm64 真机 AOT 包，**未签名**），也可用
@@ -39,12 +42,24 @@
   2. **巨魔 TrollStore（免签、永久）**：iOS 14.0–16.6.1 / 17.0（须已装巨魔）可直接安装未签名 IPA，无需 Apple ID。
   > 未签名包不含企业证书，**App 功能与签名版完全一致**；iOS 14+ / iPhone & iPad 通用（arm64）。
 
+- **Linux（tar.gz，x64）**：`tar -xzf AlphaSunCoffeeScale-1.5-linux-x64.tar.gz` 后，`./CoffeeScale` 直接运行；
+  想进应用菜单就执行 `./install-linux.sh`（装到 `~/.local/share/AlphaSunCoffeeScale`，卸载 `./install-linux.sh --uninstall`）。
+  自包含单文件已带 .NET 运行时与 Skia/HarfBuzz，但 **X11 与字体库需系统提供**：
+  `sudo apt install -y libx11-6 libice6 libsm6 fontconfig libfontconfig1 libssl3 zlib1g`（Debian/Ubuntu，其它发行版见包内「安装说明.txt」）。
+- **macOS（tar.gz，含 .app）**：解压得到 `AlphaSunCoffeeScale.app`，拖进「应用程序」。按芯片选包：
+  **arm64 = Apple Silicon（M1/M2/M3…）**、**x64 = Intel Mac**。首次打开因未签名会被 Gatekeeper 拦住，任一方式解：
+  ① 右键（或 Control + 点按）该 App → 「打开」→ 确认；② 终端 `xattr -cr /Applications/AlphaSunCoffeeScale.app`。
+  > 未做 Apple 开发者签名与公证（CI 无证书），**功能与签名版完全一致**；需要签名正式包可参考 `docs/ios-build.md` 的思路在 Mac 上重签。
+
 ### 完整性校验（SHA-256）
 
 ```text
 ee77f3caee1f604aa050e4669487ff526d62d14bc098340a216762167612e8ec  AlphaSunCoffeeScale-1.5.exe
 88be78e86cb2bc2a78d3da5f261f6f3883c8fa0c137614ec244db218acef50f4  AlphaSunCoffeeScale-1.5.apk
 04d8b4dbfb1583916422af7dbf73d8cf03e0a0d97a585cb14926109a56e63ef5  AlphaSunCoffeeScale-1.5-ios-unsigned.ipa
+f9cb300a2148b93d9358afe99835066e72118369bfd2b3ac51453c8c643e8d43  AlphaSunCoffeeScale-1.5-linux-x64.tar.gz
+45878a5168d8fa3bd91d7a1122ee5d5fd5432f55e5fc9b7d78fa0d0726a0d634  AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz
+63dfd1b66c766badb7fa4f0af2327b53bd3f8b5867d76c5d7c8c9e800c164566  AlphaSunCoffeeScale-1.5-macos-x64.tar.gz
 ```
 
 > Windows 下可用 PowerShell 验证：`Get-FileHash .\AlphaSunCoffeeScale-1.5.exe -Algorithm SHA256`
@@ -108,7 +123,9 @@ BrewViewModel：驱动"模拟注水" → 每帧快照(重量/计时/流速/实�
 |------|------|------|
 | Windows 桌面 | `dist/AlphaSunCoffeeScale-<版本>.exe` | 单文件自包含（PublishSingleFile + SelfContained），无 .NET 依赖 |
 | 安卓安装包 | `dist/AlphaSunCoffeeScale-<版本>.apk` | 单文件签名 APK（debug 密钥），`adb install -r` 或手机直接安装 |
-| 运行时配置 | `settings.json` / `brews.json` | 程序首次运行生成的**用户数据**，非分发依赖 |
+| Linux 桌面 | `dist/AlphaSunCoffeeScale-<版本>-linux-x64.tar.gz` | 自包含单文件 ELF + 安装脚本 + .desktop（GitHub Actions ubuntu-22.04 构建） |
+| macOS 桌面 | `dist/AlphaSunCoffeeScale-<版本>-macos-{arm64,x64}.tar.gz` | 自包含单文件 + `.app` bundle + icns 图标（GitHub Actions macOS runner 构建，未签名） |
+| 运行时配置 | `settings.json` / `brews.json` / `myplans.json` | 程序首次运行生成的**用户数据**：Windows 在程序同目录，macOS 在 `~/Library/Application Support/AlphaSunCoffeeScale`，Linux 在 `~/.local/share/AlphaSunCoffeeScale` |
 
 > 版本号必须三处对齐：`MainWindow.AppVer` ↔ Android `ApplicationDisplayVersion`（整数 `ApplicationVersion` 递增）↔ `CHANGELOG.md` 条目。
 
@@ -118,7 +135,7 @@ BrewViewModel：驱动"模拟注水" → 每帧快照(重量/计时/流速/实�
 
 | 版本 | 日期 | 要点 |
 |------|------|------|
-| **1.5** | 2026-09-14 | **专业模式「咖啡豆密度」交互精简**：去掉「自动（由海拔推导）」开关，海拔输入框与密度下拉框并排一行；海拔改为密度的便捷预填、下拉可手选覆盖；输入控件视觉升级（12 圆角/细描边）；代码清理与文档同步，测试 163 项全绿 |
+| **1.5** | 2026-09-14 | **专业模式「咖啡豆密度」交互精简**：去掉「自动（由海拔推导）」开关，海拔输入框与密度下拉框并排一行；海拔改为密度的便捷预填、下拉可手选覆盖；输入控件视觉升级（12 圆角/细描边）；代码清理与文档同步，测试 163 项全绿。**（2026-09-25 补发 Linux / macOS 桌面版：桌面工程跨平台化 `UsePlatformDetect`，新增 linux-x64 tar.gz 与 macOS `.app`（arm64/x64），数据目录按平台规范化，CI 新增 `build-desktop.yml` 云构建）** |
 | **1.4** | 2026-09-14 | **杯测法统一基准 + 豆密度海拔预填正式出包**：杯测 11g 粉 + 200g 94℃ 热水（≈1:18.18）、注水浸润 30s → 静置浸泡 240s；豆密度由海拔预填/可手选；修复 Android target `CheckBox` 二义性编译错误 |
 | **1.3** | 2026-09-13 | **INS × Apple 界面全面升级**（投影/圆角/胶囊徽章/渐隐细线/图标瓷砖暖白字形）、深色主题变体、修复图标对比度与英文界面残留中文、禁用按钮可辨性 |
 | **1.2** | 2026-09-13 | **修复 Android 图标整片缺失**（内嵌 Noto Emoji + Noto Sans Symbols 2 字体回退） |

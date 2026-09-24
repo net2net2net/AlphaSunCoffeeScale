@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using CoffeeScale.Core;
 using CoffeeScale.UI;
 using CoffeeScale.ViewModels;
 
@@ -11,9 +12,9 @@ namespace CoffeeScale;
 
 public static class Program
 {
-    // 崩溃日志与窗体同目录，便于用户回传定位
+    // 崩溃日志：Windows 仍与程序同目录；macOS/Linux 走用户数据目录（避免写进 .app 包内）
     private static readonly string LogPath =
-        Path.Combine(AppContext.BaseDirectory, "CoffeeScale.crash.log");
+        Path.Combine(AppPaths.LogDirectory, "CoffeeScale.crash.log");
     private static int _shown; // 防止异常循环时反复弹窗
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -80,7 +81,7 @@ public static class Program
         }
         else sb.AppendLine("（无异常对象）");
         sb.AppendLine();
-        sb.AppendLine("请把此内容（或同目录 CoffeeScale.crash.log）发回以便定位修复。");
+        sb.AppendLine("请把此内容（或日志文件 " + LogPath + "）发回以便定位修复。");
         return sb.ToString();
     }
 

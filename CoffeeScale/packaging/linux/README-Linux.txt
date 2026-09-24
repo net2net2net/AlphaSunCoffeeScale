@@ -10,5 +10,7 @@ AlphaSunCoffeeScale 1.5 · Linux 版（x64，自包含单文件，无需安装 .
   Fedora/RHEL  : sudo dnf install -y libX11 libICE libSM fontconfig openssl zlib
   Arch         : sudo pacman -S --needed libx11 libice libsm fontconfig openssl zlib
 
-【数据位置】配置与冲煮记录（settings.json / brews.json）生成在程序同目录。
-【排错】若启动无反应，在终端里运行 ./CoffeeScale 看输出；崩溃日志在同目录 CoffeeScale.crash.log。
+【数据位置】配置与冲煮记录（settings.json / brews.json / myplans.json）
+  存于 ~/.local/share/AlphaSunCoffeeScale/（遵循 XDG 规范，卸载 App 不丢数据；
+  若设了 XDG_DATA_HOME 则在其下）。如在程序目录发现旧 json，首次启动会自动搬过去。
+【排错】若启动无反应，在终端里运行 ./CoffeeScale 看输出；崩溃日志在数据目录 CoffeeScale.crash.log。

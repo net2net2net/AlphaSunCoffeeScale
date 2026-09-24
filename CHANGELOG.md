@@ -6,7 +6,57 @@
 
 ## [Unreleased]
 
-- 计划中：iOS / MacCatalyst 头工程接入 `UseIconFontFallbacks()`（本机无法构建，代码已预留同一行调用）。
+### Added
+- **🎉 iOS 安装包（未签名 IPA）首次出包**：`dist/AlphaSunCoffeeScale-1.5-ios-unsigned.ipa`（19.4 MB，arm64 真机 AOT 包，
+  iOS 14+ / iPhone & iPad 通用）。由 GitHub Actions（`build-ios.yml`）在 macOS runner 上云构建产出，
+  可用 Sideloadly / 爱思助手 / AltStore 自签安装（免费 ID 7 天），或巨魔 TrollStore 免签直装。
+- **iOS / MacCatalyst 头工程完成脚手架**：AppDelegate 接入 `UseIconFontFallbacks()`，与 Android / 桌面共享同一套字体回退配置，图标四端一致（关闭 [Unreleased] 计划项）。
+- iOS / MacCatalyst `Info.plist` 版本对齐到 `1.5`，新增 `CFBundleIconName=AppIcon` 与设备族声明；`CFBundleVersion` 对齐 Android `ApplicationVersion=6`。
+- 新增 `Assets.xcassets/AppIcon.appiconset` 图标资源目录：程序化生成暖色咖啡主题图标（iOS 14 个尺寸 + MacCatalyst 10 个尺寸）。
+- 新增 `publish-ios.sh` 与 `docs/ios-build.md`：提供 iOS 模拟器、真机、IPA、MacCatalyst 的完整 Mac 构建/签名流程。
+
+### Changed
+- iOS / MacCatalyst `.csproj`：移除硬编码 `RuntimeIdentifier`，改为默认 `ios-arm64` / `maccatalyst-arm64`，可用 `-r` 自由覆盖为模拟器或 Intel。
+- 删除 `MainWindow` 中从未使用的字段 `_homeMasterPlanWindow`，消除 `CS0169` 编译警告。
+- 修复 `MainWindowHeadlessTests` 中 `waterBox.Text` 可空转换警告（CS8600）。
+
+### Fixed
+- **iOS / MacCatalyst 头工程补上 `<OutputType>Exe</OutputType>` + 入口点 `Main.cs`（关键修复）**：
+  此前两个 head 沿用 SDK 默认的 `Library`，macios 因 `_CanOutputAppBundle=false` **静默跳过 `.app` 打包**——
+  `dotnet publish` 退出码 0、日志只打印一行空的 `Created the package: `，产物目录空无一物（CI run#13/#14 连续踩坑）。
+  改为 `Exe` 后正常产出 `CoffeeScale.iOS.app`；配套新增 `Main.cs`（`UIApplication.Main(args, null, typeof(AppDelegate))`），
+  否则会报 `CS5001 无入口点`。
+- 新增 GitHub Actions 云构建工作流 `.github/workflows/build-ios.yml`：macOS runner 上编译 arm64 并产出未签名 IPA。
+  内置三处镜像坑的规避：SDK 版本 `global.json` 钉 9.x、硬编码选 `Xcode_16.4.app`（16.4.0 是残缺壳）、重建 SDK 无版本别名符号链接。
+- iOS 图标改用经典 `iphone` / `ipad` / `ios-marketing` 三档 idiom（`idiom: universal` 是 Xcode 14+ 新格式，
+  actool 在部署目标 14.0 下不认，不产出 `Assets.car`）；最终 IPA 以 `CFBundleIconFiles` + PNG 直接入包的方式兜底注入图标。
+
+### Added（Linux / macOS 桌面版）
+- **🎉 补齐 Linux 与 macOS 桌面版安装包**（同一套桌面代码，仅换 RID 发布）：
+  - `AlphaSunCoffeeScale-1.5-linux-x64.tar.gz`（38.7 MB）：自包含单文件 ELF + `install-linux.sh` + `.desktop` 应用菜单入口 + 256/512 PNG 图标。
+  - `AlphaSunCoffeeScale-1.5-macos-arm64.tar.gz`（32.8 MB，Apple Silicon）与 `AlphaSunCoffeeScale-1.5-macos-x64.tar.gz`（34.4 MB，Intel）：
+    内含标准 `AlphaSunCoffeeScale.app` bundle（`Contents/MacOS` + `Resources/AppIcon.icns` + `Info.plist`）。
+  - 两者均由 GitHub Actions（`build-desktop.yml`）在 ubuntu-22.04 / macOS runner 上云构建，Windows 本机出不了 Unix 可执行位与 `.app` 结构。
+- 新增打包资源：`packaging/linux/`（desktop 文件、安装/卸载脚本、安装说明）与 `packaging/macos/`（`Info.plist`、安装说明）；
+  新增 `Assets/AppIcon.icns` 与 `icon-256.png` / `icon-512.png`（`tools/gen-appicon.py` 一次生成桌面三规格）。
+
+### Changed（跨平台化）
+- **桌面工程不再写死 Windows**：`Program.cs` 的 `AppBuilder` 由 `UseWin32()` 改为 **`UsePlatformDetect()`**
+  （Windows→Win32 / Linux→X11 / macOS→Avalonia.Native 自动选择；原写法在 Linux/macOS 上启动即崩，找不到 Win32 后端）。
+  崩溃弹窗改为分平台：Windows 仍走 `user32.MessageBoxW`，Linux/macOS 写日志 + stderr。
+- **数据目录按平台规范化**（新增 `CoffeeScale.Core/AppPaths`）：配置 / 记录 / 我的方案 / 崩溃日志原先一律写 `AppContext.BaseDirectory`，
+  在 macOS 上等于往 `.app` 包内写（更新 App 会丢数据、破坏包内容）。现在：
+  - Windows / Android / iOS：**保持程序同目录不变**（既有用户数据零影响）；
+  - macOS → `~/Library/Application Support/AlphaSunCoffeeScale`；
+  - Linux → `~/.local/share/AlphaSunCoffeeScale`（尊重 `XDG_DATA_HOME`）。
+  首次启动若发现程序目录里有旧 json 会自动搬到新目录（`MigrateLegacyFiles`，只搬不删）。
+- `CoffeeScale.Avalonia.csproj`：`RuntimeIdentifier` 改为可覆盖（Release 默认 `win-x64`），
+  单文件 / 自包含 / `app.manifest` / `app.ico` / `SupportedOSPlatformVersion=11.0` 等属性按 RID 条件生效，
+  一套工程即可出 `win-x64` / `linux-x64` / `osx-arm64` / `osx-x64` 四个产物。
+
+### Fixed（CI 坑）
+- `build-desktop.yml` 首跑报 `NETSDK1147: workloads must be installed: android`——共享 UI 库默认多目标 `net9.0-android`，
+  而 Linux/macOS runner 没装 android workload。桌面发布统一加 `-p:CoffeeSkipAndroid=true`（UI 库已有该开关，只留 `net9.0`）。
 
 ## [1.5] — 2026-09-14
 

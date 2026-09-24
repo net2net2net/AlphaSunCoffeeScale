@@ -38,9 +38,11 @@ public sealed class BrewViewModel : INotifyPropertyChanged
     private int _restDays = 10;
     private DateTime _roastDate = DateTime.Today.AddDays(-3); // 烘焙日期默认：现在日期前 3 天（阳光 2026-09-01）
     private DateTime _brewDate = DateTime.Today;            // 冲煮日期
-    private string _recordsPath = Path.Combine(AppContext.BaseDirectory, "brews.json");
-    private string _settingsPath = Path.Combine(AppContext.BaseDirectory, "settings.json");
-    private string _myPlansPath = Path.Combine(AppContext.BaseDirectory, "myplans.json");
+    // 落盘位置统一走 AppPaths：Windows/移动端仍在程序同目录；macOS/Linux 改到标准用户数据目录，
+    // 避免往 .app 包内或只读的程序目录写配置与冲煮记录（详见 AppPaths 注释）。
+    private string _recordsPath = AppPaths.File("brews.json");
+    private string _settingsPath = AppPaths.File("settings.json");
+    private string _myPlansPath = AppPaths.File("myplans.json");
     private List<BrewRecord> _records = new();
     private List<MyPlan> _myPlans = new();
     private string _recommendedGrindLabel = "";
@@ -1210,7 +1212,7 @@ public sealed class BrewViewModel : INotifyPropertyChanged
         get
         {
             var dir = Path.GetDirectoryName(_myPlansPath);
-            return Path.Combine(string.IsNullOrEmpty(dir) ? AppContext.BaseDirectory : dir, "myplans-backup.json");
+            return Path.Combine(string.IsNullOrEmpty(dir) ? AppPaths.DataDirectory : dir, "myplans-backup.json");
         }
     }
 

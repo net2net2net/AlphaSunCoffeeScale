@@ -12,6 +12,8 @@ AlphaSunCoffeeScale 1.5 · macOS 版（自包含单文件，无需安装 .NET）
   3. 之后双击即可正常启动
 
 【说明】本包未做 Apple 开发者签名与公证（CI 无证书），功能与签名版完全一致。
-【数据位置】配置与冲煮记录（settings.json / brews.json）生成在 .app 同目录（即「应用程序」文件夹下）。
+【数据位置】配置与冲煮记录（settings.json / brews.json / myplans.json）
+  存于 ~/Library/Application Support/AlphaSunCoffeeScale/（Finder：前往文件夹粘贴此路径），
+  不写进 .app 包内——这样更新 App 不会丢数据，也不会破坏包内容。
 【排错】右键 → 显示包内容 → Contents/MacOS/CoffeeScale 可直接在终端运行看输出；
-       崩溃日志在 Contents/MacOS/CoffeeScale.crash.log。
+       崩溃日志在数据目录 CoffeeScale.crash.log。
