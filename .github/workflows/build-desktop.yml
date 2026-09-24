@@ -57,22 +57,8 @@ jobs:
           cp CoffeeScale/src/CoffeeScale.Avalonia/Assets/icon-512.png "publish/$PKG/"
           cp CoffeeScale/packaging/linux/AlphaSunCoffeeScale.desktop "publish/$PKG/"
           cp CoffeeScale/packaging/linux/install-linux.sh "publish/$PKG/"
+          cp CoffeeScale/packaging/linux/README-Linux.txt "publish/$PKG/安装说明.txt"
           chmod +x "publish/$PKG/CoffeeScale" "publish/$PKG/install-linux.sh"
-          cat > "publish/$PKG/安装说明-Linux.txt" <<'EOF'
-AlphaSunCoffeeScale 1.5 · Linux 版（x64，自包含单文件，无需安装 .NET）
-
-【最简单】
-  1. 解压后 ./CoffeeScale 直接运行（首次启动约 1-2 秒，原生库自解压）
-  2. 想进应用菜单：chmod +x install-linux.sh && ./install-linux.sh
-     （装到 ~/.local/share/AlphaSunCoffeeScale，卸载：./install-linux.sh --uninstall）
-
-【系统依赖】自包含包已带 .NET 运行时与 Skia/HarfBuzz，但 X11 与字体库需系统提供：
-  Debian/Ubuntu: sudo apt install -y libx11-6 libice6 libsm6 fontconfig libfontconfig1 libssl3 zlib1g
-  Fedora/RHEL  : sudo dnf install -y libX11 libICE libSM fontconfig openssl zlib
-  Arch         : sudo pacman -S --needed libx11 libice libsm fontconfig openssl zlib
-
-【数据位置】配置与冲煮记录（settings.json / brews.json）生成在程序同目录。
-EOF
           tar -czf "publish/${PKG}-r${GITHUB_RUN_NUMBER}.tar.gz" -C publish "$PKG"
           echo "packaged:"; ls -la "publish/${PKG}-r${GITHUB_RUN_NUMBER}.tar.gz"
 
@@ -118,22 +104,10 @@ EOF
           chmod +x "$APP/Contents/MacOS/CoffeeScale"
           cp CoffeeScale/src/CoffeeScale.Avalonia/Assets/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
           cp CoffeeScale/packaging/macos/Info.plist "$APP/Contents/Info.plist"
+          cp CoffeeScale/packaging/macos/README-macOS.txt "publish/安装说明.txt"
           # 未签名包：让用户「右键 → 打开」或 xattr 去隔离属性即可
-          cat > "publish/安装说明-macOS-$RID.txt" <<EOF
-AlphaSunCoffeeScale 1.5 · macOS 版（$RID，自包含单文件，无需安装 .NET）
-
-【安装】
-  1. 解压得到 AlphaSunCoffeeScale.app，拖到「应用程序」文件夹
-  2. 首次打开因为无签名会被 Gatekeeper 拦住，两种方式：
-     · 右键（或 Control+点按）该 App → 打开 → 确认「打开」
-     · 终端执行：xattr -cr /Applications/AlphaSunCoffeeScale.app
-  3. 之后双击即可正常启动
-
-【说明】本包未做 Apple 开发者签名与公证（CI 无证书），数据与签名版一致。
-       芯片对应：osx-arm64=Apple Silicon（M1/M2/M3…），osx-x64=Intel Mac。
-EOF
           PKG="AlphaSunCoffeeScale-1.5-macos-${RID#osx-}-r${GITHUB_RUN_NUMBER}"
-          tar -czf "publish/$PKG.tar.gz" -C publish AlphaSunCoffeeScale.app "安装说明-macOS-$RID.txt"
+          tar -czf "publish/$PKG.tar.gz" -C publish AlphaSunCoffeeScale.app "安装说明.txt"
           echo "packaged:"; ls -la "publish/$PKG.tar.gz"
 
       - name: Upload macOS artifact
