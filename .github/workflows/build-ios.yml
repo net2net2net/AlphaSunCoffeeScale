@@ -34,10 +34,15 @@ jobs:
         working-directory: CoffeeScale
         run: dotnet --version   # global.json 钉住 9.x，防止 runner 默认 SDK 10 抢占
 
-      - name: Select latest Xcode
+      # .NET 9 iOS workload（iOS 18 SDK 绑定）只支持 Xcode 16.x，
+      # 不能选 runner 上的最新 Xcode 26.x（SDK 路径与 actool 均不兼容）
+      - name: Select Xcode 16.x
         run: |
-          ls -d /Applications/Xcode*.app | sort -V
-          XCODE="$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+          echo "Available Xcodes:"; ls -d /Applications/Xcode*.app
+          XCODE="$(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -V | tail -1 || true)"
+          if [ -z "$XCODE" ]; then
+            echo "::error::未找到 Xcode 16.x（.NET 9 iOS workload 必需）"; exit 1
+          fi
           echo "Using $XCODE"
           sudo xcode-select -s "$XCODE"
           xcodebuild -version
