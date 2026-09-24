@@ -44,12 +44,17 @@ jobs:
           XCODE=""
           for CAND in $(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -Vr); do
             CAND_DEV="$CAND/Contents/Developer"
+            SDK_MAC="$CAND_DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+            SDK_IOS="$CAND_DEV/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk"
             echo "探测 $CAND ..."
-            if DEVELOPER_DIR="$CAND_DEV" xcodebuild -sdk macosx -find actool >/dev/null 2>&1 \
+            # 与 .NET iOS 构建同款全路径校验（壳目录的 -sdk macosx 别名能骗过检查，全路径不行）
+            if DEVELOPER_DIR="$CAND_DEV" xcodebuild -sdk "$SDK_MAC" -find actool >/dev/null 2>&1 \
+               && DEVELOPER_DIR="$CAND_DEV" xcodebuild -sdk "$SDK_IOS" -find actool >/dev/null 2>&1 \
                && DEVELOPER_DIR="$CAND_DEV" xcodebuild -showsdks 2>/dev/null | grep -q iphoneos; then
               XCODE="$CAND"; echo "OK：SDK 完整"; break
             fi
-            echo "该目录 SDK 不完整，跳过"
+            echo "该目录 SDK 不完整，跳过（SDKs 目录内容：）"
+            ls "$CAND_DEV/Platforms/MacOSX.platform/Developer/SDKs/" 2>/dev/null || true
           done
           if [ -z "$XCODE" ]; then
             echo "::error::未找到 SDK 完整的 Xcode 16.x（.NET 9 iOS workload 必需）"; exit 1
