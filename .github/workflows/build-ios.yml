@@ -38,21 +38,26 @@ jobs:
       # .NET 9 iOS workload（iOS 18 SDK 绑定）只支持 Xcode 16.x；镜像里存在大量「残缺壳」目录
       # （16.0/16.0.0、16.4/16.4.0 成对，壳目录只有二进制没有 SDK 数据）。xcrun -find 会受 PATH 干扰，
       # 必须用 DEVELOPER_DIR 显式指向候选目录并强校验 xcodebuild -sdk macosx -find actool。
-      # .NET 9 iOS workload 只支持 Xcode 16.x；镜像里 16.x 成对出现（16.4 完整 / 16.4.0 空壳——
-      # SDK 骨架与 plist 都在但 usr/bin 工具缺失）。判据：usr/bin/actool 可执行 + 双平台 SDKSettings.plist。
+      # .NET 9 iOS workload 只支持 Xcode 16.x。镜像 16.x 多目录并存，实测（run#11 诊断）：
+      # Xcode_16.4.app 才是完整版；Xcode_16.4.0.app 文件看似齐全（actool/plist 都在）但内部
+      # SDK 数据库残缺——自家 xcodebuild 报 "SDK cannot be located"。故硬编码优先 16.4.app。
       - name: Select a working Xcode 16.x
         run: |
-          echo "Available Xcodes:"; ls -d /Applications/Xcode*.app
+          PREFERRED="/Applications/Xcode_16.4.app"
           XCODE=""
-          for CAND in $(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -Vr); do
-            DEV="$CAND/Contents/Developer"
-            if [ -x "$DEV/usr/bin/actool" ] \
-               && [ -f "$DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.plist" ] \
-               && [ -f "$DEV/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/SDKSettings.plist" ]; then
-              XCODE="$CAND"; echo "OK（actool 与双平台 SDK 齐全）"; break
-            fi
-            echo "跳过残缺目录 $CAND"
-          done
+          if [ -x "$PREFERRED/Contents/Developer/usr/bin/actool" ]; then
+            XCODE="$PREFERRED"; echo "使用完整版 $XCODE（actool 实证存在）"
+          else
+            echo "首选不存在或残缺，回退到逐个探测："
+            for CAND in $(ls -d /Applications/Xcode_16*.app 2>/dev/null | sort -Vr); do
+              DEV="$CAND/Contents/Developer"
+              if [ -x "$DEV/usr/bin/actool" ] \
+                 && [ -f "$DEV/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/SDKSettings.plist" ] \
+                 && [ -f "$DEV/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/SDKSettings.plist" ]; then
+                XCODE="$CAND"; break
+              fi
+            done
+          fi
           if [ -z "$XCODE" ]; then
             echo "::error::未找到 SDK 完整的 Xcode 16.x（.NET 9 iOS workload 必需）"; exit 1
           fi
